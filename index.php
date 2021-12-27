@@ -38,3 +38,10 @@ try {
     echo json_encode(Array('error' => $e->getMessage()));
 }
 */
+
+/*
+    $api = new PHP_API();
+    $basic = $api->get();
+    $planets = $api->get('planets');
+    $planet_1 = $api->get('planets/1');  
+*/
