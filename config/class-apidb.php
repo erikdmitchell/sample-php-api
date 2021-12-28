@@ -62,7 +62,7 @@ class APIDB {
 	 * @param string $charset (default: 'utf8')
 	 * @return void
 	 */
-	public function __construct( $dbuser = 'root', $dbpassword = '', $dbname = '', $dbhost = 'localhost', $charset = 'utf8' ) {
+	public function __construct( $dbuser = 'root', $dbpass = '', $dbname = '', $dbhost = 'localhost', $charset = 'utf8' ) {  	
 		$this->connection = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 		
 		if ($this->connection->connect_error) {
