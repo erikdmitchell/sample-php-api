@@ -132,7 +132,7 @@ abstract class DB {
      * @since   0.1.0
      * @return  int
      */
-    public function insert( $data, $type = '' ) {
+    public function insert( $data ) {
         global $db;
 
         // Set default values
