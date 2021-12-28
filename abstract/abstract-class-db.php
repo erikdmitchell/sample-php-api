@@ -74,9 +74,9 @@ abstract class DB {
      * @return  object
      */
     public function get( $row_id ) {
-        global $wpdb;
+        global $db;
 
-        return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $this->table_name WHERE $this->primary_key = %s LIMIT 1;", $row_id ) );
+        return $db->get_row( sprintf( "SELECT * FROM $this->table_name WHERE $this->primary_key = %s LIMIT 1;", $row_id ) );
     }
 
     /**
@@ -87,11 +87,11 @@ abstract class DB {
      * @return  object
      */
     public function get_by( $column, $row_id ) {
-        global $wpdb;
+        global $db;
 
         $column = esc_sql( $column );
 
-        return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $this->table_name WHERE $column = %s LIMIT 1;", $row_id ) );
+        return $db->get_row( sprintf( "SELECT * FROM $this->table_name WHERE $column = %s LIMIT 1;", $row_id ) );
     }
 
     /**
@@ -102,11 +102,11 @@ abstract class DB {
      * @return  string
      */
     public function get_column( $column, $row_id ) {
-        global $wpdb;
+        global $db;
 
         $column = esc_sql( $column );
 
-        return $wpdb->get_var( $wpdb->prepare( "SELECT $column FROM $this->table_name WHERE $this->primary_key = %s LIMIT 1;", $row_id ) );
+        return $db->get_var( sprintf( "SELECT $column FROM $this->table_name WHERE $this->primary_key = %s LIMIT 1;", $row_id ) );
     }
 
     /**
@@ -117,12 +117,12 @@ abstract class DB {
      * @return  string
      */
     public function get_column_by( $column, $column_where, $column_value ) {
-        global $wpdb;
+        global $db;
 
         $column_where = esc_sql( $column_where );
         $column = esc_sql( $column );
 
-        return $wpdb->get_var( $wpdb->prepare( "SELECT $column FROM $this->table_name WHERE $column_where = %s LIMIT 1;", $column_value ) );
+        return $db->get_var( sprintf( "SELECT $column FROM $this->table_name WHERE $column_where = %s LIMIT 1;", $column_value ) );
     }
 
     /**
@@ -133,12 +133,10 @@ abstract class DB {
      * @return  int
      */
     public function insert( $data, $type = '' ) {
-        global $wpdb;
+        global $db;
 
         // Set default values
         $data = wp_parse_args( $data, $this->get_column_defaults() );
-
-        do_action( 'boomi_pre_insert_' . $type, $data );
 
         // Initialise column format array
         $column_formats = $this->get_columns();
@@ -153,11 +151,9 @@ abstract class DB {
         $data_keys = array_keys( $data );
         $column_formats = array_merge( array_flip( $data_keys ), $column_formats );
 
-        $wpdb->insert( $this->table_name, $data, $column_formats );
+        $db->insert( $this->table_name, $data, $column_formats );
 
-        do_action( 'boomi_post_insert_' . $type, $wpdb->insert_id, $data );
-
-        return $wpdb->insert_id;
+        return $db->insert_id;
     }
 
     /**
@@ -168,7 +164,7 @@ abstract class DB {
      * @return  bool
      */
     public function update( $row_id, $data = array(), $where = '' ) {
-        global $wpdb;
+        global $db;
 
         // Row ID must be positive integer
         $row_id = absint( $row_id );
@@ -194,7 +190,7 @@ abstract class DB {
         $data_keys = array_keys( $data );
         $column_formats = array_merge( array_flip( $data_keys ), $column_formats );
 
-        if ( false === $wpdb->update( $this->table_name, $data, array( $where => $row_id ), $column_formats ) ) {
+        if ( false === $db->update( $this->table_name, $data, array( $where => $row_id ), $column_formats ) ) {
             return false;
         }
 
@@ -209,7 +205,7 @@ abstract class DB {
      * @return  bool
      */
     public function delete( $row_id = 0 ) {
-        global $wpdb;
+        global $db;
 
         // Row ID must be positive integer
         $row_id = absint( $row_id );
@@ -218,7 +214,7 @@ abstract class DB {
             return false;
         }
 
-        if ( false === $wpdb->query( $wpdb->prepare( "DELETE FROM $this->table_name WHERE $this->primary_key = %d", $row_id ) ) ) {
+        if ( false === $db->query( sprintf( "DELETE FROM $this->table_name WHERE $this->primary_key = %d", $row_id ) ) ) {
             return false;
         }
 
@@ -233,11 +229,11 @@ abstract class DB {
      * @return bool          If the table name exists
      */
     public function table_exists( $table ) {
-        global $wpdb;
+        global $db;
 
         $table = sanitize_text_field( $table );
 
-        return $wpdb->get_var( $wpdb->prepare( "SHOW TABLES LIKE '%s'", $table ) ) === $table;
+        return $db->get_var( sprintf( "SHOW TABLES LIKE '%s'", $table ) ) === $table;
     }
 
 }
