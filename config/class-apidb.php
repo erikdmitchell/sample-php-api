@@ -3,7 +3,7 @@
 /**
  * DB class.
  */
-class DB {
+class APIDB {
 
     /**
      * connection
