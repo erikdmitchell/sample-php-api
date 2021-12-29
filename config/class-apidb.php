@@ -44,15 +44,6 @@ class APIDB {
     }
 
 /*
-	private function _gettype($var) {
-	    if (is_string($var)) return 's';
-	    if (is_float($var)) return 'd';
-	    if (is_int($var)) return 'i';
-	    return 'b';
-	}
-*/
-
-/*
 	public function escape( $string ) {
         return $this->connection->escape_string($string);
 	}
