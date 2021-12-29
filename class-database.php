@@ -18,7 +18,7 @@ class Database{
 	private $connected = false; // Check to see if the connection is active
     private $connection = ""; // This will be our mysqli object
 	private $result = array(); // Any results from a query will be stored here
-    private $myQuery = "";// used for debugging process with SQL return
+    private $query = "";// used for debugging process with SQL return
     private $numResults = "";// used for returning the number of rows
 	
 	// Function to make connection to database
@@ -57,7 +57,7 @@ class Database{
 	
 	public function sql($sql){
 		$query = $this->connection->query($sql);
-        $this->myQuery = $sql; // Pass back the SQL
+        $this->query = $sql; // Pass back the SQL
 		if($query){
 			// If the query returns >= 1 assign the number of rows to numResults
 			$this->numResults = $query->num_rows;
@@ -100,7 +100,7 @@ class Database{
             $q .= ' LIMIT '.$limit;
         }
         // echo $table;
-        $this->myQuery = $q; // Pass back the SQL
+        $this->query = $q; // Pass back the SQL
 		// Check to see if the table exists
         if($this->tableExists($table)){
         	// The table exists, run the query
@@ -138,7 +138,7 @@ class Database{
     	// Check to see if the table exists
     	 if($this->tableExists($table)){
     	 	$sql='INSERT INTO `'.$table.'` (`'.implode('`, `',array_keys($params)).'`) VALUES ("' . implode('", "', $params) . '")';
-            $this->myQuery = $sql; // Pass back the SQL
+            $this->query = $sql; // Pass back the SQL
             // Make the query to insert to the database
             if($ins = $this->connection->query($sql)){
             	array_push($this->result,$this->connection->insert_id);
@@ -165,7 +165,7 @@ class Database{
             // Submit query to database
             if($del = $this->connection->query($delete)){
             	array_push($this->result,$this->connection->affected_rows);
-                $this->myQuery = $delete; // Pass back the SQL
+                $this->query = $delete; // Pass back the SQL
                 return true; // The query exectued correctly
             }else{
             	array_push($this->result,$this->connection->error);
@@ -189,7 +189,7 @@ class Database{
 			// Create the query
 			$sql='UPDATE '.$table.' SET '.implode(',',$args).' WHERE '.$where;
 			// Make query to database
-            $this->myQuery = $sql; // Pass back the SQL
+            $this->query = $sql; // Pass back the SQL
             if($query = $this->connection->query($sql)){
             	array_push($this->result,$this->connection->affected_rows);
             	return true; // Update has been successful
@@ -216,28 +216,28 @@ class Database{
     }
 	
 	// Public function to return the data to the user
-    public function getResult(){
+    public function get_result(){
         $val = $this->result;
         $this->result = array();
         return $val;
     }
 
     //Pass the SQL back for debugging
-    public function getSql(){
-        $val = $this->myQuery;
-        $this->myQuery = array();
+    public function get_sql(){
+        $val = $this->query;
+        $this->query = array();
         return $val;
     }
 
     //Pass the number of rows back
-    public function numRows(){
+    public function num_rows(){
         $val = $this->numResults;
         $this->numResults = array();
         return $val;
     }
 
     // Escape your string
-    public function escapeString($data){
+    public function escape_string($data){
         return $this->connection->real_escape_string($data);
     }
 } 
