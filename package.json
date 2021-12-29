@@ -1,0 +1,47 @@
+{
+  "name": "sample-php-api",
+  "version": "0.1.0",
+  "description": "Sample PHP API",
+  "main": "gulpfile.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erikdmitchell/sample-php-api.git"
+  },
+  "keywords": [],
+  "author": "Erik Mitchell",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/erikdmitchell/sample-php-api/issues"
+  },
+  "homepage": "https://github.com/erikdmitchell/sample-php-api#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-ignore": "^2.0.2",
+    "gulp-jshint": "^2.0.4",
+    "gulp-load-plugins": "",
+    "gulp-notify": "",
+    "gulp-phpcbf": "^0.1.2",
+    "gulp-phpcs": "^2.1.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-stylelint": "^13.0.0",
+    "gulp-uglify": "^3.0.2",
+    "gulp-uglifycss": "",
+    "gulp-util": "",
+    "gulp-zip": "^3.2.0",
+    "jshint": "",
+    "jshint-stylish": "",
+    "run-sequence": "",
+    "sass": "^1.32.13",
+    "stylelint": "^13.13.1"
+  },
+  "dependencies": {
+    "gulp-sourcemaps": "^2.6.5",
+    "node-sass": "^4.14.1"
+  }
+}
