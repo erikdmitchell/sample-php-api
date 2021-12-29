@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit 
-    bootstrap="./tests/bootstrap.php"
+    bootstrap="tests/bootstrap.php"
 	backupGlobals="false"
 	colors="true"
 	convertErrorsToExceptions="true"
@@ -10,7 +10,7 @@
     >
 	<testsuites>
 		<testsuite name="Sample API Test Suite">
-			<directory>./tests/php</directory>
+    		<directory>./tests/</directory>
 		</testsuite>
 	</testsuites>
 	<filter>

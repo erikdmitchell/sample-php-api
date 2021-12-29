@@ -18,6 +18,13 @@ $dbpass = 'wp';
 $dbname = 'nonwp';
 
 $db = new APIDB($dbuser, $dbpass, $dbname);
+
+
+        $firstclass=new FirstClass();
+        $encoded=$firstclass->encodeString("string");
+        $this->assertSame($encoded, "120rwp");
+        
+        
     }        
 
 }

@@ -1,9 +1,9 @@
 <?php
-// This array has a single file but could whole the contents of an entire directory.
-$files = [];
+/**
+ * PHPUnit bootstrap file.
+ *
+ */
 
-foreach ($files as $file) {
-    if (file_exists($file)) {
-        require_once $file;
-    }
-}
+$dir = realpath(__DIR__ . '/..');
+
+//include_once( $dir . '/bootstrap.php' );

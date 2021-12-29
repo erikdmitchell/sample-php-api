@@ -29,7 +29,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "erikdmitchell\\sample_php_api\\": "tests/php/"
+            "erikdmitchell\\sample_php_api\\": "tests/"
         }
     },        
     "scripts": {
