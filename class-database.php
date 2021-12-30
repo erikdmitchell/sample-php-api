@@ -42,14 +42,12 @@ class Database{
     public function disconnect(){
     	// If there is a connection to the database
     	if($this->connected){
-    		// We have found a connection, try to close it
+    		// We have found a connection, try to close it, otherwise return false.
     		if($this->connection->close()){
-    			// We have successfully closed the connection, set the connection variable to false
-    			$this->connected = false;
-				// Return true tjat we have closed the connection
-				return true;
+    			$this->connected = false; // We have successfully closed the connection, set the connection variable to false
+				
+				return true; // Return true that we have closed the connection
 			}else{
-				// We could not close the connection, return false
 				return false;
 			}
 		}
@@ -57,10 +55,12 @@ class Database{
 	
 	public function sql($sql){
 		$query = $this->connection->query($sql);
+        
         $this->query = $sql; // Pass back the SQL
+        
 		if($query){
-			// If the query returns >= 1 assign the number of rows to numResults
-			$this->numResults = $query->num_rows;
+			$this->numResults = $query->num_rows; // If the query returns >= 1 assign the number of rows to numResults
+			
 			// Loop through the query results by the number of rows returned
 			for($i = 0; $i < $this->numResults; $i++){
 				$r = $query->fetch_array();
@@ -76,14 +76,15 @@ class Database{
 					}
 				}
 			}
+			
 			return true; // Query was successful
 		}else{
 			array_push($this->result,$this->connection->error);
+			
 			return false; // No rows where returned
 		}
 	}
 	
-	// Function to SELECT from the database
 	public function select($table, $rows = '*', $join = null, $where = null, $order = null, $limit = null){
 		// Create query from the variables passed to the function
 		$q = 'SELECT '.$rows.' FROM '.$table;
@@ -99,12 +100,14 @@ class Database{
         if($limit != null){
             $q .= ' LIMIT '.$limit;
         }
-        // echo $table;
+        
         $this->query = $q; // Pass back the SQL
+		
 		// Check to see if the table exists
         if($this->tableExists($table)){
         	// The table exists, run the query
         	$query = $this->connection->query($q);    
+		
 			if($query){
 				// If the query returns >= 1 assign the number of rows to numResults
 				$this->numResults = $query->num_rows;
@@ -123,14 +126,16 @@ class Database{
 						}
 					}
 				}
+				
 				return true; // Query was successful
-			}else{
+			}else{	
 				array_push($this->result,$this->connection->error);
+				
 				return false; // No rows where returned
 			}
-      	}else{
-      		return false; // Table does not exist
-    	}
+      	}
+    
+        return false; // Table does not exist
     }
 	
 	// Function to insert into the database
@@ -142,14 +147,16 @@ class Database{
             // Make the query to insert to the database
             if($ins = $this->connection->query($sql)){
             	array_push($this->result,$this->connection->insert_id);
+                
                 return true; // The data has been inserted
             }else{
             	array_push($this->result,$this->connection->error);
+                
                 return false; // The data has not been inserted
             }
-        }else{
-        	return false; // Table does not exist
         }
+        
+        return false; // Table does not exist
     }
 	
 	//Function to delete table or row(s) from database
@@ -162,6 +169,7 @@ class Database{
             }else{
                 $delete = 'DELETE FROM '.$table.' WHERE '.$where; // Create query to delete rows
             }
+            
             // Submit query to database
             if($del = $this->connection->query($delete)){
             	array_push($this->result,$this->connection->affected_rows);
@@ -171,9 +179,9 @@ class Database{
             	array_push($this->result,$this->connection->error);
                	return false; // The query did not execute correctly
             }
-        }else{
-            return false; // The table does not exist
         }
+            
+        return false; // The table does not exist
     }
 	
 	// Function to update row in database
@@ -186,20 +194,24 @@ class Database{
 				// Seperate each column out with it's corresponding value
 				$args[]=$field.'="'.$value.'"';
 			}
+			
 			// Create the query
 			$sql='UPDATE '.$table.' SET '.implode(',',$args).' WHERE '.$where;
+			
 			// Make query to database
             $this->query = $sql; // Pass back the SQL
+            
             if($query = $this->connection->query($sql)){
             	array_push($this->result,$this->connection->affected_rows);
             	return true; // Update has been successful
             }else{
             	array_push($this->result,$this->connection->error);
+            	
                 return false; // Update has not been successful
             }
-        }else{
-            return false; // The table does not exist
         }
+        
+        return false; // The table does not exist
     }
 	
 	// Private function to check if table exists for use with queries

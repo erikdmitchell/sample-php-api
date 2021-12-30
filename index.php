@@ -1,13 +1,13 @@
 <?php
 require __DIR__ . '/bootstrap.php';
 
-global $db;
+global $apidb;
 
 $dbuser = 'wp';
 $dbpass = 'wp';
 $dbname = 'nonwp';
 
-$db = new Database();
-$db->connect();
+$apidb = new Database();
+$apidb->connect();
 
-print_r($db);
+print_r($apidb);
