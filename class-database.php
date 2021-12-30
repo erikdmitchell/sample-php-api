@@ -213,6 +213,62 @@ class Database{
         
         return false; // The table does not exist
     }
+    
+	/**
+	 * Retrieves one row from the database.
+	 *
+	 * Executes a SQL query and returns the row from the SQL result.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param string|null $query SQL query.
+	 * @param int $y Optional. Row to return. Indexed from 0.
+	 *
+	 * @return array|object|null|void
+	 */    
+	public function get_row( $query = null, $y = 0 ) {
+		if ( $query ) {
+			$this->sql( $query );
+		} else {
+			return null;
+		}
+
+		if ( ! isset( $this->result[ $y ] ) ) {
+			return null;
+		}
+
+        return $this->result[ $y ] ? $this->result[ $y ] : null;
+	}
+	
+	/**
+	 * Retrieves one variable from the database.
+	 *
+	 * Executes a SQL query and returns the value from the SQL result.
+	 * If the SQL result contains more than one column and/or more than one row,
+	 * the value in the column and row specified is returned. If $query is null,
+	 * the value in the specified column and row from the previous SQL result is returned.
+	 *
+	 * @since 0.71
+	 *
+	 * @param string|null $query Optional. SQL query. Defaults to null, use the result from the previous query.
+	 * @param int $x Optional. Column of value to return. Indexed from 0.
+	 * @param int $y Optional. Row of value to return. Indexed from 0.
+	 *
+	 * @return string|null Database query result (as string), or null on failure.
+	 */
+	public function get_var( $query = null, $x = 0, $y = 0 ) {
+		if ( $query ) {
+			$this->query( $query );
+		}
+
+		// Extract var out of cached results based on x,y vals.
+		if ( ! empty( $this->result[ $y ] ) ) {
+			$values = array_values( get_object_vars( $this->result[ $y ] ) );
+		}
+
+		// If there is a value return it, else return null.
+		return ( isset( $values[ $x ] ) && '' !== $values[ $x ] ) ? $values[ $x ] : null;
+	}	   
 	
 	// Private function to check if table exists for use with queries
 	private function table_exists($table){
