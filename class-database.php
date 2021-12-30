@@ -8,9 +8,9 @@ class Database{
 	 * Database class
 	 */
 	private $db_host = "localhost";  // Change as required
-	private $db_user = "user";  // Change as required
-	private $db_pass = "password";  // Change as required
-	private $db_name = "database";	// Change as required	
+	private $db_user = "wp";  // Change as required
+	private $db_pass = "wp";  // Change as required
+	private $db_name = "nonwp";	// Change as required	
 	
 	/*
 	 * Extra variables that are required by other function such as boolean con variable
@@ -203,7 +203,7 @@ class Database{
     }
 	
 	// Private function to check if table exists for use with queries
-	private function tableExists($table){
+	private function table_exists($table){
 		$tablesInDb = $this->connection->query('SHOW TABLES FROM '.$this->db_name.' LIKE "'.$table.'"');
         if($tablesInDb){
         	if($tablesInDb->num_rows == 1){

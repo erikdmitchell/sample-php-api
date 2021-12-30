@@ -7,8 +7,7 @@ $dbuser = 'wp';
 $dbpass = 'wp';
 $dbname = 'nonwp';
 
-$db = new APIDB($dbuser, $dbpass, $dbname);
+$db = new Database();
+$db->connect();
 
-
-
- 
+print_r($db);
