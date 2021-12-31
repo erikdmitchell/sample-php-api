@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpunit>
+    <php>
+        <var name="DB_DSN" value="mysql:dbname=nonwp;host=localhost" />
+        <var name="DB_USER" value="wp" />
+        <var name="DB_PASSWD" value="wp" />
+        <var name="DB_DBNAME" value="nonwp" />
+    </php>
+</phpunit>
+
+
+<phpunit bootstrap="./tests/bootstrap.php"
+         verbose="false"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true">
+         
+    <php>
+        <var name="DB_HOST" value="10.0.0.20" />
+        <var name="DB_USER" value="root" />
+        <var name="DB_PASSWD" value="tutorial" />
+        <var name="DB_DBNAME" value="library" />
+    </php>
+
+    <testsuites>
+        <testsuite name="persistence">
+            <directory>./tests/Persistence</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
