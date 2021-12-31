@@ -8,7 +8,7 @@ class DB {
      * @access  public
      * @since   0.1.0
      */
-    public $table_name = 'films';
+    public $table_name;
 
     /**
      * The version of our database table
@@ -27,33 +27,52 @@ class DB {
     public $primary_key;
 
     /**
-     * Get things started
+     * __construct function.
      *
-     * @access  public
-     * @since   0.1.0
+     * @access public
+     * @return void
      */
-    public function __construct() {}
-
-    /**
-     * Whitelist of columns
-     *
-     * @access  public
-     * @since   0.1.0
-     * @return  array
-     */
-    public function get_columns() {
-        return array();
+    public function __construct() {
+        $this->table_name  = 'films';
+        $this->primary_key = 'id';
+        $this->version     = '0.1.0';
     }
 
     /**
-     * Default column values
+     * Get table columns.
      *
-     * @access  public
-     * @since   0.1.0
-     * @return  array
+     * @access public
+     * @return void
+     */
+    public function get_columns() {
+        return array(
+            'id' => '%d',
+            'name' => '%s',
+            'year' => '%d',
+            'actor' => '%s',
+            'director' => '%s',
+            'image' => '%s',
+            'date_created' => '%s',
+            'last_updated' => '%s',                                    
+        );
+    }
+
+    /**
+     * Column defaults.
+     *
+     * @access public
+     * @return void
      */
     public function get_column_defaults() {
-        return array();
+        return array(
+            'name' => '',
+            'year' => '',
+            'actor' => '',
+            'director' => '',
+            'image' => '', 
+            'date_created' => date( 'Y-m-d H:i:s' ),
+            'last_updated' => date( 'Y-m-d H:i:s' ),
+        );
     }
 
     /**
@@ -126,7 +145,7 @@ class DB {
         global $apidb;
 
         // Set default values
-        $data = wp_parse_args( $data, $this->get_column_defaults() );
+        $data = parse_args( $data, $this->get_column_defaults() );
 
         // Initialise column format array
         $column_formats = $this->get_columns();
@@ -143,7 +162,7 @@ class DB {
 
         $apidb->insert( $this->table_name, $data );
 
-        return $apidb->insert_id;
+        return $apidb->insert_id();
     }
 
     /**
@@ -153,12 +172,11 @@ class DB {
      * @since   0.1.0
      * @return  bool
      */
-/*
     public function update( $row_id, $data = array(), $where = '' ) {
         global $apidb;
 
         // Row ID must be positive integer
-        $row_id = absint( $row_id );
+        $row_id = intval( $row_id );
 
         if ( empty( $row_id ) ) {
             return false;
@@ -181,13 +199,12 @@ class DB {
         $data_keys = array_keys( $data );
         $column_formats = array_merge( array_flip( $data_keys ), $column_formats );
 
-        if ( false === $apidb->update( $this->table_name, $data, array( $where => $row_id ), $column_formats ) ) {
+        if ( false === $apidb->update( $this->table_name, $data, array( $where => $row_id ) ) ) {
             return false;
         }
 
         return true;
     }
-*/
 
     /**
      * Delete a row identified by the primary key
@@ -196,7 +213,6 @@ class DB {
      * @since   0.1.0
      * @return  bool
      */
-/*
     public function delete( $row_id = 0 ) {
         global $apidb;
 
@@ -213,7 +229,6 @@ class DB {
 
         return true;
     }
-*/
 
     /**
      * Check if the table exists

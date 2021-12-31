@@ -20,6 +20,8 @@ class Database{
 	private $result = array(); // Any results from a query will be stored here
     private $query = "";// used for debugging process with SQL return
     private $numResults = "";// used for returning the number of rows
+
+    public $insert_id = 0;
 	
 	// Function to make connection to database
 	public function connect(){
@@ -104,7 +106,7 @@ class Database{
         $this->query = $q; // Pass back the SQL
 		
 		// Check to see if the table exists
-        if($this->tableExists($table)){
+        if($this->table_exists($table)){
         	// The table exists, run the query
         	$query = $this->connection->query($q);    
 		
@@ -141,12 +143,14 @@ class Database{
 	// Function to insert into the database
     public function insert($table,$params=array()){
     	// Check to see if the table exists
-    	 if($this->tableExists($table)){
+    	 if($this->table_exists($table)){
     	 	$sql='INSERT INTO `'.$table.'` (`'.implode('`, `',array_keys($params)).'`) VALUES ("' . implode('", "', $params) . '")';
             $this->query = $sql; // Pass back the SQL
             // Make the query to insert to the database
             if($ins = $this->connection->query($sql)){
             	array_push($this->result,$this->connection->insert_id);
+            	
+            	$this->insert_id = $this->connection->insert_id;
                 
                 return true; // The data has been inserted
             }else{
@@ -162,7 +166,7 @@ class Database{
 	//Function to delete table or row(s) from database
     public function delete($table,$where = null){
     	// Check to see if table exists
-    	 if($this->tableExists($table)){
+    	 if($this->table_exists($table)){
     	 	// The table exists check to see if we are deleting rows or table
     	 	if($where == null){
                 $delete = 'DROP TABLE '.$table; // Create query to delete table
@@ -185,9 +189,13 @@ class Database{
     }
 	
 	// Function to update row in database
-    public function update($table,$params=array(),$where){
+    public function update($table,$params=array(),$where=array()){
+		$fields     = array();
+		$conditions = array();
+		$values     = array();
+		        
     	// Check to see if table exists
-    	if($this->tableExists($table)){
+    	if($this->table_exists($table)){
     		// Create Array to hold all the columns to update
             $args=array();
 			foreach($params as $field=>$value){
@@ -195,14 +203,26 @@ class Database{
 				$args[]=$field.'="'.$value.'"';
 			}
 			
+		foreach ( $where as $field => $value ) {
+			if ( is_null( $value ) ) {
+				$conditions[] = "`$field` IS NULL";
+				continue;
+			}
+
+			$conditions[] = "`$field` = " . $value;
+		}
+
+		$conditions = implode( ' AND ', $conditions );
+		
 			// Create the query
-			$sql='UPDATE '.$table.' SET '.implode(',',$args).' WHERE '.$where;
-			
+			$sql='UPDATE '.$table.' SET '.implode(',',$args).' WHERE '.$conditions;
+		
 			// Make query to database
             $this->query = $sql; // Pass back the SQL
             
             if($query = $this->connection->query($sql)){
             	array_push($this->result,$this->connection->affected_rows);
+            	
             	return true; // Update has been successful
             }else{
             	array_push($this->result,$this->connection->error);
@@ -309,5 +329,11 @@ print_r($this->result[0]);
     // Escape your string
     public function escape_string($data){
         return $this->connection->real_escape_string($data);
+    }
+    
+    public function insert_id() {
+        $val = $this->insert_id;
+        $this->insert_id = array();
+        return $val;        
     }
 } 
