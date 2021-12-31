@@ -34,8 +34,8 @@ var phpSrc = [
         '**/*.php', // Include all files    
         '!node_modules/**/*', // Exclude node_modules
         '!vendor/**', // Exclude vendor 
-        '!bootstrap.php', // Exclude bootstrap   
-        '!tests/**', // Exclude tests?        
+        //'!bootstrap.php', // Exclude bootstrap   
+        //'!tests/**', // Exclude tests?        
     ];
 
 var cssInclude = [
@@ -100,7 +100,7 @@ const gulp = require('gulp'),
  
 // compile sass
 function sass(done) {
-  return (
+    return (
     gulp.src('./assets/css/sass/*.scss')
         .pipe(plumber())
         .pipe(sourcemaps.init())
@@ -119,13 +119,13 @@ function sass(done) {
         .pipe(plumber.stop())
         .pipe(gulp.dest(cssDest))
         
-  );
-  done();
+    );
+    done();
 }
 
 // minify all css
 function mincss(done) {
-  return (
+    return (
     gulp.src(cssInclude)
         .pipe(plumber())
         .pipe(sourcemaps.init())
@@ -145,21 +145,21 @@ function mincss(done) {
         }))
         .pipe(gulp.dest('./'))
         
-  );
-  done();
+    );
+    done();
 }
 
 // css linting with Stylelint.
 function lintcss(done) {
-  return (
+    return (
     gulp.src(cssInclude)
         .pipe(stylelint({
-          reporters: [
+            reporters: [
             {formatter: 'string', console: true}
-          ]
+            ]
         }))
-  );
-  done();
+    );
+    done();
 }
 
 /**
@@ -174,7 +174,7 @@ function scripts() {
             presets: [
                 ['@babel/preset-env', {
                     modules: false
-                }]
+            }]
             ]
         }))    
         .pipe(rename({
@@ -187,12 +187,12 @@ function scripts() {
 
 // js linting with JSHint.
 function lintjs(done) {
-  return (
+    return (
     gulp.src(jsInclude)
         .pipe(jshint())
         .pipe(jshint.reporter(stylish))
-  );
-  done();
+    );
+    done();
 }
 
 /**
@@ -201,7 +201,7 @@ function lintjs(done) {
 
 // PHP Code Sniffer.
 function phpcs(done) {
-  return (
+    return (
     gulp.src(phpSrc)
         .pipe(gulpphpcs({
             bin: 'vendor/bin/phpcs',
@@ -209,13 +209,13 @@ function phpcs(done) {
             warningSeverity: 0
         }))
         .pipe(gulpphpcs.reporter('log'))
-  );
-  done();
+    );
+    done();
 }
 
 // PHP Code Beautifier.
 function phpcbf(done) {
-  return (
+    return (
     gulp.src(phpSrc)
         .pipe(gphpcbf({
             bin: 'vendor/bin/phpcbf',
@@ -224,8 +224,8 @@ function phpcbf(done) {
         }))       
         .on('error', gutil.log)
         .pipe(gulp.dest('./'))
-  );
-  done();
+    );
+    done();
 }
 
 /*
@@ -234,20 +234,20 @@ function phpcbf(done) {
 
 // Watch files
 function watchFiles() {
-  gulp.watch('./sass/**/*', sass);
-  //gulp.watch('./js/**/*.js', js);
-  // Watch js file and compile them if any codes change
-  //watch(['js/*.js'], jsTask);  
+    gulp.watch('./sass/**/*', sass);
+    //gulp.watch('./js/**/*.js', js);
+    // Watch js file and compile them if any codes change
+    //watch(['js/*.js'], jsTask);  
 }
 
 // gulp zip
 function zip(done) {
-  return (
+    return (
     gulp.src(buildInclude)
         .pipe(gzip('sample-api.zip'))
         .pipe(gulp.dest('./../'))
-  );
-  done();
+    );
+    done();
 }
 
 // define complex tasks
