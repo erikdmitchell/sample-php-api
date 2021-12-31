@@ -1,30 +1,38 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<phpunit>
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit 
+    bootstrap="tests/bootstrap.php"
+	backupGlobals="false"
+	colors="true"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	verbose="true"
+    >
+        
     <php>
         <var name="DB_DSN" value="mysql:dbname=nonwp;host=localhost" />
         <var name="DB_USER" value="wp" />
         <var name="DB_PASSWD" value="wp" />
         <var name="DB_DBNAME" value="nonwp" />
-    </php>
-</phpunit>
-
-
-<phpunit bootstrap="./tests/bootstrap.php"
-         verbose="false"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true">
-         
-    <php>
-        <var name="DB_HOST" value="10.0.0.20" />
-        <var name="DB_USER" value="root" />
-        <var name="DB_PASSWD" value="tutorial" />
-        <var name="DB_DBNAME" value="library" />
-    </php>
-
-    <testsuites>
-        <testsuite name="persistence">
-            <directory>./tests/Persistence</directory>
-        </testsuite>
-    </testsuites>
+    </php>        
+        
+	<testsuites>
+		<testsuite name="Sample API Test Suite">
+    		<directory>./tests/</directory>
+		</testsuite>
+	</testsuites>
+	<filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+			<directory suffix=".json">./data</directory>
+            <directory suffix=".php">./node_modules</directory>
+            <directory suffix=".php">./vendor</directory>			
+		</whitelist>
+	</filter>
+	<logging>
+		<log type="tap" target="build/report.tap"/>
+		<log type="junit" target="build/report.junit.xml"/>
+		<log type="coverage-html" target="build/coverage" charset="UTF-8" yui="true" highlight="true"/>
+		<log type="coverage-text" target="build/coverage.txt"/>
+		<log type="coverage-clover" target="build/logs/clover.xml"/>
+	</logging>
 </phpunit>
