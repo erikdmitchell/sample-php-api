@@ -87,22 +87,37 @@ class Database{
 		}
 	}
 	
-	public function select($table, $rows = '*', $join = null, $where = null, $order = null, $limit = null){
+	public function select($table, $rows = '*', $join = null, $where = array(), $order = null, $limit = null){
+		$conditions = array();
+		    	
 		// Create query from the variables passed to the function
 		$q = 'SELECT '.$rows.' FROM '.$table;
 		if($join != null){
 			$q .= ' JOIN '.$join;
 		}
-        if($where != null){
-        	$q .= ' WHERE '.$where;
+		
+        if($where != null) {
+            foreach ( $where as $field => $value ) {
+			    if ( is_null( $value ) ) {
+				    $conditions[] = "`$field` IS NULL";
+                    continue;
+			    }
+
+                $conditions[] = "`$field` = " . "'$value'";
+            }
+
+            $conditions = implode( ' AND ', $conditions );	
+		
+            $q .= ' WHERE '.$conditions;
 		}
+        
         if($order != null){
             $q .= ' ORDER BY '.$order;
 		}
         if($limit != null){
             $q .= ' LIMIT '.$limit;
         }
-        
+       
         $this->query = $q; // Pass back the SQL
 		
 		// Check to see if the table exists

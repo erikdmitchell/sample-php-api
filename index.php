@@ -71,3 +71,16 @@ print_r($testdb->get_column( 'director', $test_row_id));
 echo '<br />get_column_by()<br />';
 print_r($testdb->get_column_by( 'actor', 'year', '1962'));
 */
+
+// main db class SELECT.
+/*
+$table = 'films';
+$rows = '*';
+$join = null;
+$where = array('name' => 'Dr. No');
+$order = null;
+$limit = null;
+//$select_return = $apidb->select($table, $rows = '*', $join = null, $where = null, $order = null, $limit = null)
+$apidb->select($table, $rows, $join, $where, $order, $limit);
+print_r($apidb->get_result());
+*/
