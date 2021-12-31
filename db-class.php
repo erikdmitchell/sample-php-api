@@ -206,24 +206,17 @@ class DB {
         return true;
     }
 
-    /**
-     * Delete a row identified by the primary key
-     *
-     * @access  public
-     * @since   0.1.0
-     * @return  bool
-     */
-    public function delete( $row_id = 0 ) {
+    public function delete( $row_id = 0, $where = '' ) {
         global $apidb;
 
         // Row ID must be positive integer
-        $row_id = absint( $row_id );
+        $row_id = intval( $row_id );
 
         if ( empty( $row_id ) ) {
             return false;
         }
 
-        if ( false === $apidb->query( sprintf( "DELETE FROM $this->table_name WHERE $this->primary_key = %d", $row_id ) ) ) {
+        if ( false === $apidb->delete($this->table_name, $this->primary_key . ' = ' . $row_id) ) {
             return false;
         }
 

@@ -32,6 +32,7 @@ if ($testdb->table_exists()){
 }
 */
 
+
 /*
 $insert_test_data = array(
     'name' => 'Dr. No',
@@ -40,9 +41,9 @@ $insert_test_data = array(
     'director' => 'Terence Young',
     'image' => 'https =>//upload.wikimedia.org/wikipedia/en/4/43/Dr._No_-_UK_cinema_poster.jpg'
 );
-echo $testdb->insert($insert_test_data);
+$test_row_id = $testdb->insert($insert_test_data);
 */
-$test_row_id = 1;
+//$test_row_id = 2;
 /*
 $update_test_id = 1; //(prev result);
 $update_test_data = array(
@@ -84,3 +85,5 @@ $limit = null;
 $apidb->select($table, $rows, $join, $where, $order, $limit);
 print_r($apidb->get_result());
 */
+
+//echo $testdb->delete($test_row_id);
