@@ -280,12 +280,10 @@ class Database{
 		if ( $query ) {
 			$this->sql( $query );
 		}
-print_r($query);
-print_r($this->query);
-print_r($this->result[0]);
+
 		// Extract var out of cached results based on x,y vals.
 		if ( ! empty( $this->result[ $y ] ) ) {
-			$values = array_values( get_object_vars( $this->result[ $y ] ) );
+			$values = array_values( $this->result[ $y ] );
 		}
 
 		// If there is a value return it, else return null.

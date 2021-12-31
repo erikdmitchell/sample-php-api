@@ -95,12 +95,12 @@ class DB {
      * @since   0.1.0
      * @return  object
      */
-    public function get_by( $column, $row_id ) {
+    public function get_by( $column, $value ) {
         global $apidb;
 
         //$column = esc_sql( $column ); // $apidb->esc_string( $column );
 
-        return $apidb->get_row( sprintf( "SELECT * FROM $this->table_name WHERE $column = %s LIMIT 1;", $row_id ) );
+        return $apidb->get_row( sprintf( "SELECT * FROM $this->table_name WHERE $column = %s LIMIT 1;", $value ) );
     }
 
     /**
