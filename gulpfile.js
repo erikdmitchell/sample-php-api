@@ -33,7 +33,9 @@ var buildInclude = [
 var phpSrc = [
         '**/*.php', // Include all files    
         '!node_modules/**/*', // Exclude node_modules
-        '!vendor/**' // Exclude vendor   
+        '!vendor/**', // Exclude vendor 
+        '!bootstrap.php', // Exclude bootstrap   
+        '!tests/**', // Exclude tests?        
     ];
 
 var cssInclude = [
