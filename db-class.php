@@ -1,10 +1,5 @@
 <?php
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
-
 class DB {
 
     /**
@@ -127,7 +122,6 @@ class DB {
      * @since   0.1.0
      * @return  int
      */
-/*
     public function insert( $data ) {
         global $apidb;
 
@@ -147,11 +141,10 @@ class DB {
         $data_keys = array_keys( $data );
         $column_formats = array_merge( array_flip( $data_keys ), $column_formats );
 
-        $apidb->insert( $this->table_name, $data, $column_formats );
+        $apidb->insert( $this->table_name, $data );
 
         return $apidb->insert_id;
     }
-*/
 
     /**
      * Update a row
@@ -223,18 +216,16 @@ class DB {
 */
 
     /**
-     * Check if the given table exists
+     * Check if the table exists
      *
      * @since  0.1.0
-     * @param  string $table The table name
-     * @return bool          If the table name exists
+     * 
+     * @return bool If the table name exists
      */
-    public function table_exists( $table ) {
+    public function table_exists() {
         global $apidb;
 
-        //$table = sanitize_text_field( $table );
-
-        return $apidb->get_var( sprintf( "SHOW TABLES LIKE '%s'", $table ) ) === $table;
+        return $apidb->table_exists( $this->table_name );
     }
 
 }

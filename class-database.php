@@ -258,9 +258,11 @@ class Database{
 	 */
 	public function get_var( $query = null, $x = 0, $y = 0 ) {
 		if ( $query ) {
-			$this->query( $query );
+			$this->sql( $query );
 		}
-
+print_r($query);
+print_r($this->query);
+print_r($this->result[0]);
 		// Extract var out of cached results based on x,y vals.
 		if ( ! empty( $this->result[ $y ] ) ) {
 			$values = array_values( get_object_vars( $this->result[ $y ] ) );
@@ -270,8 +272,8 @@ class Database{
 		return ( isset( $values[ $x ] ) && '' !== $values[ $x ] ) ? $values[ $x ] : null;
 	}	   
 	
-	// Private function to check if table exists for use with queries
-	private function table_exists($table){
+	// Check if table exists for use with queries
+	public function table_exists($table){
 		$tablesInDb = $this->connection->query('SHOW TABLES FROM '.$this->db_name.' LIKE "'.$table.'"');
         if($tablesInDb){
         	if($tablesInDb->num_rows == 1){

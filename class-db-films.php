@@ -1,10 +1,5 @@
 <?php
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
-
 class DB_Films extends DB {
 
     /**
@@ -169,9 +164,10 @@ class DB_Films extends DB {
     /**
      * Create the table
      *
-     * @since   0.1.0
+     * @since 0.1.0
      */
     public function create_table() {
+echo "create table: $this->table_name<br>";        
         $sql = 'CREATE TABLE '.$this->table_name.' (
         id int(11) unsigned NOT NULL AUTO_INCREMENT,
         name varchar(255) NOT NULL DEFAULT '',
