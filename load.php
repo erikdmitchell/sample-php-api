@@ -9,12 +9,14 @@ include_once( API_ROOT_PATH . '/abstract/abstract-class-db.php' );
 include_once( API_ROOT_PATH . '/class-db-films.php' );
 
 function parse_args( $args, $defaults = array() ) {
+    $parsed_args = '';
+    
     if ( is_object( $args ) ) {
         $parsed_args = get_object_vars( $args );
     } elseif ( is_array( $args ) ) {
         $parsed_args =& $args;
     } else {
-        parse_args( $args, $parsed_args ); /** @phpstan-ignore-line */
+        parse_args( $args, $parsed_args );
     }
 
     if ( is_array( $defaults ) && $defaults ) {
