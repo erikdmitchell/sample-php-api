@@ -1,10 +1,5 @@
 <?php
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
-
 class DB_Films extends DB {
 
     /**
@@ -28,13 +23,13 @@ class DB_Films extends DB {
     public function get_columns() {
         return array(
             'id' => '%d',
-            'title' => '%s',
+            'name' => '%s',
             'year' => '%d',
             'actor' => '%s',
             'director' => '%s',
             'image' => '%s',
             'date_created' => '%s',
-            'last_updated' => '%s',                                    
+            'last_updated' => '%s',
         );
     }
 
@@ -46,11 +41,11 @@ class DB_Films extends DB {
      */
     public function get_column_defaults() {
         return array(
-            'title' => '',
+            'name' => '',
             'year' => '',
             'actor' => '',
             'director' => '',
-            'image' => '', 
+            'image' => '',
             'date_created' => date( 'Y-m-d H:i:s' ),
             'last_updated' => date( 'Y-m-d H:i:s' ),
         );
@@ -75,7 +70,7 @@ class DB_Films extends DB {
      * Insert.
      *
      * @access public
-     * @param mixed  $data
+     * @param mixed $data
      * @return void
      */
     public function insert( $data ) {
@@ -159,9 +154,6 @@ class DB_Films extends DB {
     public function set_last_changed( $row_id = 0 ) {
         global $db;
 
-        // $last_changed = $this->update( $row_id, array( 'last_updated' => date( 'Y-m-d H:i:s' ) ) ); --> this causes an infinite loop through update().
-
-        // raw sql insert for now.
         if ( false === $db->update( $this->table_name, array( 'last_updated' => date( 'Y-m-d H:i:s' ) ), array( $this->primary_key => $row_id ) ) ) {
             return false;
         }
@@ -172,34 +164,23 @@ class DB_Films extends DB {
     /**
      * Create the table
      *
-     * @since   0.1.0
+     * @since 0.1.0
      */
     public function create_table() {
-/*
-        global $db;
-
+        echo "create table: $this->table_name<br>";
         $sql = 'CREATE TABLE ' . $this->table_name . ' (
-        session_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-        session_key char(32) NOT NULL,
-        session_value longtext NOT NULL,
-        session_expiry BIGINT UNSIGNED NOT NULL,
-        PRIMARY KEY  (session_id),
-        UNIQUE KEY session_key (session_key)
-		) CHARACTER SET utf8 COLLATE utf8_general_ci;';
+        id int(11) unsigned NOT NULL AUTO_INCREMENT,
+        name varchar(255) NOT NULL DEFAULT '',
+        year int(4) NOT NULL,
+        actor varchar(80) NOT NULL DEFAULT '',
+        director varchar(80) NOT NULL DEFAULT '',
+        image varchar(255) NOT NULL DEFAULT '',
+        date_created datetime NOT NULL,
+        last_updated datetime NOT NULL,
+        PRIMARY KEY (id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;';
 
-        dbDelta( $sql );
-*/
-/*
-            'id' => '%d',
-            'title' => '%s',
-            'year' => '%d',
-            'actor' => '%s',
-            'director' => '%s',
-            'image' => '%s',
-            'date_created' => '%s',
-            'last_updated' => '%s', 
-*/
-
+        // insert.
     }
 
 }
