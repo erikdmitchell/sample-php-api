@@ -86,12 +86,12 @@ abstract class DB {
      * @since   0.1.0
      * @return  object
      */
-    public function get_by( $column, $row_id ) {
+    public function get_by( $column, $value ) {
         global $apidb;
 
-        $column = esc_sql( $column );
+        // $column = esc_sql( $column ); // $apidb->esc_string( $column );
 
-        return $apidb->get_row( sprintf( "SELECT * FROM $this->table_name WHERE $column = %s LIMIT 1;", $row_id ) );
+        return $apidb->get_row( sprintf( "SELECT * FROM $this->table_name WHERE $column = %s LIMIT 1;", $value ) );
     }
 
     /**
@@ -104,7 +104,7 @@ abstract class DB {
     public function get_column( $column, $row_id ) {
         global $apidb;
 
-        $column = esc_sql( $column );
+        // $column = esc_sql( $column ); // $apidb->esc_string( $column );
 
         return $apidb->get_var( sprintf( "SELECT $column FROM $this->table_name WHERE $this->primary_key = %s LIMIT 1;", $row_id ) );
     }
@@ -119,8 +119,8 @@ abstract class DB {
     public function get_column_by( $column, $column_where, $column_value ) {
         global $apidb;
 
-        $column_where = esc_sql( $column_where );
-        $column       = esc_sql( $column );
+        // $column_where = esc_sql( $column_where ); // $apidb->esc_string( $column_where );
+        // $column = esc_sql( $column ); // $apidb->esc_string( $column );
 
         return $apidb->get_var( sprintf( "SELECT $column FROM $this->table_name WHERE $column_where = %s LIMIT 1;", $column_value ) );
     }
@@ -136,7 +136,7 @@ abstract class DB {
         global $apidb;
 
         // Set default values
-        $data = wp_parse_args( $data, $this->get_column_defaults() );
+        $data = parse_args( $data, $this->get_column_defaults() );
 
         // Initialise column format array
         $column_formats = $this->get_columns();
@@ -151,9 +151,9 @@ abstract class DB {
         $data_keys      = array_keys( $data );
         $column_formats = array_merge( array_flip( $data_keys ), $column_formats );
 
-        $apidb->insert( $this->table_name, $data, $column_formats );
+        $apidb->insert( $this->table_name, $data );
 
-        return $apidb->insert_id;
+        return $apidb->insert_id();
     }
 
     /**
@@ -167,7 +167,7 @@ abstract class DB {
         global $apidb;
 
         // Row ID must be positive integer
-        $row_id = absint( $row_id );
+        $row_id = intval( $row_id );
 
         if ( empty( $row_id ) ) {
             return false;
@@ -190,7 +190,7 @@ abstract class DB {
         $data_keys      = array_keys( $data );
         $column_formats = array_merge( array_flip( $data_keys ), $column_formats );
 
-        if ( false === $apidb->update( $this->table_name, $data, array( $where => $row_id ), $column_formats ) ) {
+        if ( false === $apidb->update( $this->table_name, $data, array( $where => $row_id ) ) ) {
             return false;
         }
 
@@ -204,17 +204,17 @@ abstract class DB {
      * @since   0.1.0
      * @return  bool
      */
-    public function delete( $row_id = 0 ) {
+    public function delete( $row_id = 0, $where = '' ) {
         global $apidb;
 
         // Row ID must be positive integer
-        $row_id = absint( $row_id );
+        $row_id = intval( $row_id );
 
         if ( empty( $row_id ) ) {
             return false;
         }
 
-        if ( false === $apidb->query( sprintf( "DELETE FROM $this->table_name WHERE $this->primary_key = %d", $row_id ) ) ) {
+        if ( false === $apidb->delete( $this->table_name, $this->primary_key . ' = ' . $row_id ) ) {
             return false;
         }
 
@@ -228,12 +228,10 @@ abstract class DB {
      * @param  string $table The table name
      * @return bool          If the table name exists
      */
-    public function table_exists( $table ) {
+    public function table_exists() {
         global $apidb;
 
-        $table = sanitize_text_field( $table );
-
-        return $apidb->get_var( sprintf( "SHOW TABLES LIKE '%s'", $table ) ) === $table;
+        return $apidb->table_exists( $this->table_name );
     }
 
 }
