@@ -28,32 +28,10 @@
 	<!-- Rules -->
 	<rule ref="PHPCompatibility"/>
 
-
-	<!--
-		 Trigger error if PHPCSUtils cannot be found.
-		 PHPCSUtils does not contain any sniffs, so this rule isn't strictly necessary, but
-		 by having this here anyway, if PHPCSUtils is missing, the user will get a
-		 descriptive error message during the loading of the ruleset instead of
-		 a fatal "class not found" error once the sniffs start running.
-	-->
-	<rule ref="PHPCSUtils"/>
-
-	<!--
-	#############################################################################
-	Handbook: PHP - Single and Double Quotes.
-	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#single-and-double-quotes
-	#############################################################################
-	-->
 	<!-- Covers rule: Use single and double quotes when appropriate.
 		 If you're not evaluating anything in the string, use single quotes. -->
 	<rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired"/>
 
-	<!--
-	#############################################################################
-	Handbook: PHP - Indentation.
-	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#indentation
-	#############################################################################
-	-->
 	<!-- Covers rule: Your indentation should always reflect logical structure. -->
 	<rule ref="Generic.WhiteSpace.ScopeIndent">
 		<properties>
@@ -68,22 +46,10 @@
 		</properties>
 	</rule>
 
-	<!-- Covers rule: Use real tabs and not spaces. -->
-	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
-
-
-	<!-- Generic array layout check. -->
-	<!-- Covers rule: For associative arrays, each item should start on a new line
-		 when the array contains more than one item.
-		 Also covers various single-line array whitespace issues. -->
-<!-- 	<rule ref="WordPress.Arrays.ArrayDeclarationSpacing"/> -->
-
-	<!-- Covers rule: Note the comma after the last array item: this is recommended. -->
-<!-- 	<rule ref="WordPress.Arrays.CommaAfterArrayItem"/> -->
-
 	<!-- Covers rule: For switch structures case should indent one tab from the
 		 switch statement and break one tab from the case statement. -->
 	<rule ref="PSR2.ControlStructures.SwitchDeclaration"/>
+	
 	<!-- Prevent duplicate messages for the same issue. Covered by other sniffs. -->
 	<rule ref="PSR2.ControlStructures.SwitchDeclaration.NotLower">
 		<severity>0</severity>
@@ -95,71 +61,23 @@
 		<severity>0</severity>
 	</rule>
 
-	<!-- Covers rule: ... while spaces can be used mid-line for alignment. -->
-	<rule ref="Universal.WhiteSpace.DisallowInlineTabs"/>
-
-	<!-- Implied through the examples: align the assignment operator in a block of assignments. -->
+	<!-- Implied through the examples: align the assignment operator in a block of assignments and align the double arrows. -->
 	<rule ref="Generic.Formatting.MultipleStatementAlignment">
 		<properties>
 			<property name="maxPadding" value="40"/>
-		</properties>
-	</rule>
-
-	<!-- Implied through the examples: align the double arrows. -->
-<!--
-	<rule ref="WordPress.Arrays.MultipleStatementAlignment">
-		<properties>
 			<property name="maxColumn" value="60"/>
 		</properties>
 	</rule>
--->
 
-	<!--
-	#############################################################################
-	Handbook: PHP - Brace Style.
-	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#brace-style
-	#############################################################################
-	-->
 	<!-- Covers rule: Braces shall be used for all blocks. -->
 	<rule ref="Squiz.ControlStructures.ControlSignature"/>
 
 	<!-- Covers rule: Braces should always be used, even when they are not required. -->
 	<rule ref="Generic.ControlStructures.InlineControlStructure"/>
 
-	<!--
-	#############################################################################
-	Handbook: PHP - Declaring Arrays.
-	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#declaring-arrays
-	#############################################################################
-	-->
-	<!-- Covers rule: Arrays must be declared using long array syntax. -->
-	<rule ref="Universal.Arrays.DisallowShortArraySyntax"/>
-
-	<!--
-	#############################################################################
-	Handbook: PHP - Use elseif, not else if.
-	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#use-elseif-not-else-if
-	#############################################################################
-	-->
 	<!-- Covers rule: ... use elseif for conditionals. -->
 	<rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
 
-	<!--
-	#############################################################################
-	Handbook: PHP - Regular Expressions.
-	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#regular-expressions
-	#############################################################################
-	-->
-	<!-- Covers rule: Perl compatible regular expressions should be used in preference
-		 to their POSIX counterparts. -->
-<!-- 	<rule ref="WordPress.PHP.POSIXFunctions"/> -->
-
-	<!--
-	#############################################################################
-	Handbook: PHP - Opening and Closing PHP Tags.
-	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#opening-and-closing-php-tags
-	#############################################################################
-	-->
 	<!-- Covers rule: When embedding multi-line PHP snippets within a HTML block, the
 		 PHP open and close tags must be on a line by themselves. -->
 	<rule ref="Squiz.PHP.EmbeddedPhp"/>
@@ -176,47 +94,22 @@
 		<severity>0</severity>
 	</rule>
 
-	<!--
-	#############################################################################
-	Handbook: PHP - No Shorthand PHP Tags.
-	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#no-shorthand-php-tags
-	#############################################################################
-	-->
 	<!-- Covers rule: Never use shorthand PHP start tags. Always use full PHP tags. -->
 	<rule ref="Generic.PHP.DisallowShortOpenTag"/>
 	<rule ref="Generic.PHP.DisallowAlternativePHPTags"/>
 
-	<!--
-	#############################################################################
-	Handbook: PHP - Remove Trailing Spaces.
-	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#remove-trailing-spaces
-	#############################################################################
-	-->
 	<!-- Covers rule: Remove trailing whitespace at the end of each line of code. -->
 	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
 
 	<!-- Covers rule: Omitting the closing PHP tag at the end of a file is preferred. -->
 	<rule ref="PSR2.Files.ClosingTag"/>
 
-	<!--
-	#############################################################################
-	Handbook: PHP - Space Usage.
-	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#space-usage
-	#############################################################################
-	-->
-	<!-- Covers rule: Always put spaces after commas, and on both sides of logical,
-		 comparison, string and assignment operators. -->
-<!-- 	<rule ref="WordPress.WhiteSpace.OperatorSpacing"/> -->
 	<rule ref="Squiz.Strings.ConcatenationSpacing">
 		<properties>
 			<property name="spacing" value="1"/>
 			<property name="ignoreNewlines" value="true"/>
 		</properties>
 	</rule>
-
-	<!-- Covers rule: Put spaces on both sides of the opening and closing parenthesis of
-		 if, elseif, foreach, for, and switch blocks. -->
-<!-- 	<rule ref="WordPress.WhiteSpace.ControlStructureSpacing"/> -->
 
 	<!-- Covers rule: Define a function like so: function my_function( $param1 = 'foo', $param2 = 'bar' ) { -->
 	<rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie">
@@ -253,14 +146,9 @@
 		 For float casts use (float). -->
 	<rule ref="Generic.Formatting.SpaceAfterCast"/>
 	<rule ref="Squiz.WhiteSpace.CastSpacing"/>
-<!-- 	<rule ref="WordPress.WhiteSpace.CastStructureSpacing"/> -->
-<!-- 	<rule ref="WordPress.PHP.TypeCasts"/> -->
 	<rule ref="PSR12.Keywords.ShortFormTypeKeywords"/>
 	<!-- N.B.: This sniff also checks the case of (parameter/return) type declarations, not just type casts. -->
 	<rule ref="Generic.PHP.LowerCaseType"/>
-
-	<!-- Covers rule: ... array items, only include a space around the index if it is a variable. -->
-<!-- 	<rule ref="WordPress.Arrays.ArrayKeySpacingRestrictions"/> -->
 
 	<!-- Covers rule: Unless otherwise specified, parentheses should have spaces inside of them. -->
 	<rule ref="Generic.WhiteSpace.ArbitraryParenthesesSpacing">
@@ -276,42 +164,9 @@
 	<!-- Covers rule: Constants should be in all upper-case with underscores separating words. -->
 	<rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
 
-	<!-- Covers rule: Files should be named descriptively using lowercase letters.
-		 Hyphens should separate words. -->
-	<!-- Covers rule: Class file names should be based on the class name with "class-"
-		 prepended and the underscores in the class name replaced with hyphens.
-		 https://github.com/WordPress/WordPress-Coding-Standards/issues/642 -->
-	<!-- Covers rule: Files containing template tags in wp-includes should have "-template"
-		 appended to the end of the name.
-		 https://github.com/WordPress/WordPress-Coding-Standards/issues/642 -->
-<!-- 	<rule ref="WordPress.Files.FileName"/> -->
-
-	<!-- Rule: The short ternary operator must not be used. -->
-	<rule ref="Universal.Operators.DisallowShortTernary"/>
-
-	<!--
-	#############################################################################
-	Handbook: PHP - Yoda Conditions.
-	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#yoda-conditions
-	#############################################################################
-	-->
-	<!-- Covers rule: When doing logical comparisons, always put the variable on the right side,
-		 constants or literals on the left. -->
-<!-- 	<rule ref="WordPress.PHP.YodaConditions"/> -->
-
-	<!-- Rule: Yoda conditions for <, >, <= or >= are significantly more difficult to read
-		 and are best avoided. -->
-
 	<!-- Rule: In general, readability is more important than cleverness or brevity. -->
 	<rule ref="Squiz.PHP.DisallowMultipleAssignments"/>
 	<rule ref="Generic.Formatting.DisallowMultipleStatements"/>
-
-	<!-- Rule: Unless absolutely necessary, loose comparisons should not be used,
-		 as their behaviour can be misleading. -->
-	<rule phpcs-only="true" ref="Universal.Operators.StrictComparisons">
-		<type>warning</type>
-	</rule>
-<!-- 	<rule ref="WordPress.PHP.StrictInArray"/> -->
 
 	<!-- Rule: The goto statement must never be used. -->
 	<rule ref="Generic.PHP.DiscourageGoto">
@@ -326,29 +181,16 @@
 	</rule>
 
 	<!-- Rule: create_function() function, which internally performs an eval(),
-		 is deprecated in PHP 7.2. ... these must not be used. -->
-<!-- 	<rule ref="WordPress.PHP.RestrictedPHPFunctions"/> -->
-
-
-	<!--
-	#############################################################################
-	Handbook: PHP - (No) Error Control Operator @.
-	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#error-control-operator
-	#############################################################################
-	-->
-	<!-- Covers rule: This operator is often used lazily instead of doing proper error checking.
-		 Its use is highly discouraged. -->
-<!-- 	<rule ref="WordPress.PHP.NoSilencedErrors"/> -->
-
-
-	<!--
-	#############################################################################
-	Handbook: PHP - Don't extract().
-	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#dont-extract
-	#############################################################################
-	-->
-<!-- 	<rule ref="WordPress.PHP.DontExtract"/> -->
-
+		 is deprecated in PHP 7.2. ... these must not be used.
+		 PHP - Don't extract(). -->
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array">
+                <element key="create_function" value="null"/>
+                <element key="extract" value="null"/>
+            </property>
+         </properties>
+    </rule>
 
 	<!-- Important to prevent issues with content being sent before headers. -->
 	<rule ref="Generic.Files.ByteOrderMark"/>
