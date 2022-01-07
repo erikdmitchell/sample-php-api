@@ -52,21 +52,6 @@ class DB_Films extends DB {
     }
 
     /**
-     * Add data.
-     *
-     * @access public
-     * @param array $data (default: array())
-     * @return void
-     */
-    public function add( $data = array() ) {
-        $defaults = array();
-
-        $args = wp_parse_args( $data, $defaults );
-
-        return $this->insert( $args );
-    }
-
-    /**
      * Insert.
      *
      * @access public
@@ -102,35 +87,6 @@ class DB_Films extends DB {
 
         return $result;
     }
-
-    /**
-     * Delete.
-     *
-     * @access public
-     * @param bool $_id_or_slug (default: false)
-     * @return bool/int
-     */
-    /*
-    public function delete( $_id_or_slug = false ) {
-        if ( empty( $_id_or_slug ) ) {
-            return false;
-        }
-
-        $column = is_numeric( $_id_or_slug ) ? 'session_id' : 'session_key';
-        $connector = $this->get_connector_by( $column, $_id_or_slug );
-
-        if ( $connector->id > 0 ) {
-            global $wpdb;
-
-            $result = $wpdb->delete( $this->table_name, array( 'id' => $connector->id ), array( '%d' ) );
-
-            return $result;
-
-        } else {
-            return false;
-        }
-    }
-    */
 
     /*
     public function exists( $value = '', $field = 'id' ) {
