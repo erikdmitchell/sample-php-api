@@ -98,7 +98,7 @@ class DB {
     public function get_by( $column, $value ) {
         global $apidb;
 
-        //$column = esc_sql( $column ); // $apidb->esc_string( $column );
+        // $column = esc_sql( $column ); // $apidb->esc_string( $column );
 
         return $apidb->get_row( sprintf( "SELECT * FROM $this->table_name WHERE $column = %s LIMIT 1;", $value ) );
     }
@@ -113,7 +113,7 @@ class DB {
     public function get_column( $column, $row_id ) {
         global $apidb;
 
-        //$column = esc_sql( $column ); // $apidb->esc_string( $column );
+        // $column = esc_sql( $column ); // $apidb->esc_string( $column );
 
         return $apidb->get_var( sprintf( "SELECT $column FROM $this->table_name WHERE $this->primary_key = %s LIMIT 1;", $row_id ) );
     }
@@ -128,8 +128,8 @@ class DB {
     public function get_column_by( $column, $column_where, $column_value ) {
         global $apidb;
 
-        //$column_where = esc_sql( $column_where ); // $apidb->esc_string( $column_where );
-        //$column = esc_sql( $column ); // $apidb->esc_string( $column );
+        // $column_where = esc_sql( $column_where ); // $apidb->esc_string( $column_where );
+        // $column = esc_sql( $column ); // $apidb->esc_string( $column );
 
         return $apidb->get_var( sprintf( "SELECT $column FROM $this->table_name WHERE $column_where = %s LIMIT 1;", $column_value ) );
     }

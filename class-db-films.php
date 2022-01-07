@@ -70,7 +70,7 @@ class DB_Films extends DB {
      * Insert.
      *
      * @access public
-     * @param mixed  $data
+     * @param mixed $data
      * @return void
      */
     public function insert( $data ) {

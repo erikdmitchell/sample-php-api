@@ -27,6 +27,8 @@
 
 	<!-- Rules -->
 	<rule ref="PHPCompatibility"/>
+	
+	<rule ref="./phpcs-inline-docs.xml"/>
 
 	<!-- Covers rule: Use single and double quotes when appropriate.
 		 If you're not evaluating anything in the string, use single quotes. -->

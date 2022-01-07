@@ -43,7 +43,7 @@ $insert_test_data = array(
 );
 $test_row_id = $testdb->insert($insert_test_data);
 */
-//$test_row_id = 2;
+// $test_row_id = 2;
 /*
 $update_test_id = 1; //(prev result);
 $update_test_data = array(
@@ -81,9 +81,9 @@ $join = null;
 $where = array('name' => 'Dr. No');
 $order = null;
 $limit = null;
-//$select_return = $apidb->select($table, $rows = '*', $join = null, $where = null, $order = null, $limit = null)
+// $select_return = $apidb->select($table, $rows = '*', $join = null, $where = null, $order = null, $limit = null)
 $apidb->select($table, $rows, $join, $where, $order, $limit);
 print_r($apidb->get_result());
 */
 
-//echo $testdb->delete($test_row_id);
+// echo $testdb->delete($test_row_id);

@@ -178,7 +178,7 @@ class Database {
         return false; // Table does not exist
     }
 
-    //Function to delete table or row(s) from database
+    // Function to delete table or row(s) from database
     public function delete( $table, $where = null) {
         // Check to see if table exists
         if ($this->table_exists( $table )) {
@@ -257,7 +257,7 @@ class Database {
      * @since 0.1.0
      *
      * @param string|null $query SQL query.
-     * @param int $y Optional. Row to return. Indexed from 0.
+     * @param int         $y Optional. Row to return. Indexed from 0.
      *
      * @return array|object|null|void
      */
@@ -286,8 +286,8 @@ class Database {
      * @since 0.71
      *
      * @param string|null $query Optional. SQL query. Defaults to null, use the result from the previous query.
-     * @param int $x Optional. Column of value to return. Indexed from 0.
-     * @param int $y Optional. Row of value to return. Indexed from 0.
+     * @param int         $x Optional. Column of value to return. Indexed from 0.
+     * @param int         $y Optional. Row of value to return. Indexed from 0.
      *
      * @return string|null Database query result (as string), or null on failure.
      */
@@ -325,14 +325,14 @@ class Database {
         return $val;
     }
 
-    //Pass the SQL back for debugging
+    // Pass the SQL back for debugging
     public function get_sql() {
         $val         = $this->query;
         $this->query = array();
         return $val;
     }
 
-    //Pass the number of rows back
+    // Pass the number of rows back
     public function num_rows() {
         $val              = $this->numResults;
         $this->numResults = array();
