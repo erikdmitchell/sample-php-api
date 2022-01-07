@@ -1,0 +1,16 @@
+parameters:
+    level: 0
+    paths:
+        - includes/
+        - boomi-cms.php
+    excludePaths:
+        - vendor/
+    ignoreErrors:
+        - '#Function WP_CLI\\Utils\\make_progress_bar not found#'
+        - '#Function WP_CLI\\Utils\\format_items not found#'
+        - '#Call to static method error\(\) on an unknown class WP_CLI#'
+        - '#Call to static method add_command\(\) on an unknown class WP_CLI#'
+        - '#Function get_field not found#'
+        - '#Function get_sub_field not found#'        
+        - '#Function have_rows not found#'
+        - '#Function the_row not found#'
