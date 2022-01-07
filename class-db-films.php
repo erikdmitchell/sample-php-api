@@ -108,9 +108,9 @@ class DB_Films extends DB {
      * @return void
      */
     public function set_last_changed( $row_id = 0 ) {
-        global $db;
+        global $apidb;
 
-        if ( false === $db->update( $this->table_name, array( 'last_updated' => date( 'Y-m-d H:i:s' ) ), array( $this->primary_key => $row_id ) ) ) {
+        if ( false === $apidb->update( $this->table_name, array( 'last_updated' => date( 'Y-m-d H:i:s' ) ), array( $this->primary_key => $row_id ) ) ) {
             return false;
         }
 
@@ -123,7 +123,8 @@ class DB_Films extends DB {
      * @since 0.1.0
      */
     public function create_table() {
-        echo "create table: $this->table_name<br>";
+        global $apidb;
+
         $sql = 'CREATE TABLE ' . $this->table_name . ' (
         id int(11) unsigned NOT NULL AUTO_INCREMENT,
         name varchar(255) NOT NULL DEFAULT '',
@@ -136,7 +137,9 @@ class DB_Films extends DB {
         PRIMARY KEY (id)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;';
 
-        // insert.
+        if (!$this->table_exists()) {
+            $apidb->sql( $sql );
+        }
     }
 
 }
