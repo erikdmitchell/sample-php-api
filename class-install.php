@@ -1,4 +1,10 @@
 <?php
+/**
+ * Install class
+ *
+ * @package PHPAPI
+ * @version 0.1.0
+ */
 
 /**
  * Install class.

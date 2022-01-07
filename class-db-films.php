@@ -1,5 +1,16 @@
 <?php
+/**
+ * Films database class
+ *
+ * @package PHPAPI
+ * @version 0.1.0
+ */
 
+/**
+ * DB_Films class.
+ *
+ * @extends DB
+ */
 class DB_Films extends DB {
 
     /**
@@ -18,7 +29,7 @@ class DB_Films extends DB {
      * Get table columns.
      *
      * @access public
-     * @return void
+     * @return array
      */
     public function get_columns() {
         return array(
@@ -37,7 +48,7 @@ class DB_Films extends DB {
      * Column defaults.
      *
      * @access public
-     * @return void
+     * @return array
      */
     public function get_column_defaults() {
         return array(
@@ -55,8 +66,8 @@ class DB_Films extends DB {
      * Insert.
      *
      * @access public
-     * @param mixed $data
-     * @return void
+     * @param mixed $data array
+     * @return bool
      */
     public function insert( $data ) {
         $result = parent::insert( $data );
@@ -73,9 +84,9 @@ class DB_Films extends DB {
      * Update.
      *
      * @access public
-     * @param mixed  $row_id
-     * @param array  $data (default: array())
-     * @param string $where (default: '')
+     * @param mixed  $row_id int
+     * @param array  $data (default: array()).
+     * @param string $where (default: '').
      * @return int
      */
     public function update( $row_id, $data = array(), $where = '' ) {
@@ -88,24 +99,12 @@ class DB_Films extends DB {
         return $result;
     }
 
-    /*
-    public function exists( $value = '', $field = 'id' ) {
-        $columns = $this->get_columns();
-
-        if ( ! array_key_exists( $field, $columns ) ) {
-            return false;
-        }
-
-        return (bool) $this->get_column_by( 'id', $field, $value );
-    }
-    */
-
     /**
      * Set last changed.
      *
      * @access public
      * @param int $row_id (default: 0)
-     * @return void
+     * @return bool
      */
     public function set_last_changed( $row_id = 0 ) {
         global $apidb;
