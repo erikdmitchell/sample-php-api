@@ -195,39 +195,6 @@ function lintjs(done) {
     done();
 }
 
-/**
- * PHP
- */
-
-// PHP Code Sniffer.
-function phpcs(done) {
-    return (
-    gulp.src(phpSrc)
-        .pipe(gulpphpcs({
-            bin: 'vendor/bin/phpcs',
-            standard: './phpcs.ruleset.xml',
-            warningSeverity: 0
-        }))
-        .pipe(gulpphpcs.reporter('log'))
-    );
-    done();
-}
-
-// PHP Code Beautifier.
-function phpcbf(done) {
-    return (
-    gulp.src(phpSrc)
-        .pipe(gphpcbf({
-            bin: 'vendor/bin/phpcbf',
-            standard: './phpcs.ruleset.xml',
-            warningSeverity: 0
-        }))       
-        .on('error', gutil.log)
-        .pipe(gulp.dest('./'))
-    );
-    done();
-}
-
 /*
  * Misc
 */

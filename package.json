@@ -24,8 +24,6 @@
     "gulp-jshint": "^2.0.4",
     "gulp-load-plugins": "",
     "gulp-notify": "",
-    "gulp-phpcbf": "^0.1.2",
-    "gulp-phpcs": "^2.1.0",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
