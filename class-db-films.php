@@ -29,7 +29,7 @@ class DB_Films extends DB {
             'director' => '%s',
             'image' => '%s',
             'date_created' => '%s',
-            'last_updated' => '%s',                                    
+            'last_updated' => '%s',
         );
     }
 
@@ -45,7 +45,7 @@ class DB_Films extends DB {
             'year' => '',
             'actor' => '',
             'director' => '',
-            'image' => '', 
+            'image' => '',
             'date_created' => date( 'Y-m-d H:i:s' ),
             'last_updated' => date( 'Y-m-d H:i:s' ),
         );
@@ -167,8 +167,8 @@ class DB_Films extends DB {
      * @since 0.1.0
      */
     public function create_table() {
-        echo "create table: $this->table_name<br>";        
-        $sql = 'CREATE TABLE '.$this->table_name.' (
+        echo "create table: $this->table_name<br>";
+        $sql = 'CREATE TABLE ' . $this->table_name . ' (
         id int(11) unsigned NOT NULL AUTO_INCREMENT,
         name varchar(255) NOT NULL DEFAULT '',
         year int(4) NOT NULL,
@@ -179,7 +179,7 @@ class DB_Films extends DB {
         last_updated datetime NOT NULL,
         PRIMARY KEY (id)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;';
-        
+
         // insert.
     }
 

@@ -53,7 +53,7 @@ class DB {
             'director' => '%s',
             'image' => '%s',
             'date_created' => '%s',
-            'last_updated' => '%s',                                    
+            'last_updated' => '%s',
         );
     }
 
@@ -69,7 +69,7 @@ class DB {
             'year' => '',
             'actor' => '',
             'director' => '',
-            'image' => '', 
+            'image' => '',
             'date_created' => date( 'Y-m-d H:i:s' ),
             'last_updated' => date( 'Y-m-d H:i:s' ),
         );
@@ -84,7 +84,7 @@ class DB {
      */
     public function get( $row_id ) {
         global $apidb;
-       
+
         return $apidb->get_row( sprintf( "SELECT * FROM $this->table_name WHERE $this->primary_key = %s LIMIT 1;", $row_id ) );
     }
 
@@ -157,7 +157,7 @@ class DB {
         $data = array_intersect_key( $data, $column_formats );
 
         // Reorder $column_formats to match the order of columns given in $data
-        $data_keys = array_keys( $data );
+        $data_keys      = array_keys( $data );
         $column_formats = array_merge( array_flip( $data_keys ), $column_formats );
 
         $apidb->insert( $this->table_name, $data );
@@ -196,7 +196,7 @@ class DB {
         $data = array_intersect_key( $data, $column_formats );
 
         // Reorder $column_formats to match the order of columns given in $data
-        $data_keys = array_keys( $data );
+        $data_keys      = array_keys( $data );
         $column_formats = array_merge( array_flip( $data_keys ), $column_formats );
 
         if ( false === $apidb->update( $this->table_name, $data, array( $where => $row_id ) ) ) {
@@ -216,7 +216,7 @@ class DB {
             return false;
         }
 
-        if ( false === $apidb->delete($this->table_name, $this->primary_key . ' = ' . $row_id) ) {
+        if ( false === $apidb->delete( $this->table_name, $this->primary_key . ' = ' . $row_id ) ) {
             return false;
         }
 
@@ -227,7 +227,7 @@ class DB {
      * Check if the table exists
      *
      * @since  0.1.0
-     * 
+     *
      * @return bool If the table name exists
      */
     public function table_exists() {

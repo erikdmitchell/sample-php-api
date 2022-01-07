@@ -1,5 +1,5 @@
 <?php
-define("API_ROOT_PATH", __DIR__);
+define( 'API_ROOT_PATH', __DIR__ );
 
 // Connect to MySQL database.
 include_once( API_ROOT_PATH . '/class-database.php' );
@@ -16,7 +16,7 @@ function parse_args( $args, $defaults = array() ) {
     } else {
         wp_parse_str( $args, $parsed_args );
     }
- 
+
     if ( is_array( $defaults ) && $defaults ) {
         return array_merge( $defaults, $parsed_args );
     }

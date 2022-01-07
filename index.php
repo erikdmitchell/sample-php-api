@@ -28,7 +28,7 @@ echo '</pre>';
 if ($testdb->table_exists()){
     echo 'table exists<br>';
 } else {
-    echo 'table does not exist<br>';   
+    echo 'table does not exist<br>';
 }
 */
 
