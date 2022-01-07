@@ -167,7 +167,7 @@ class DB_Films extends DB {
      * @since 0.1.0
      */
     public function create_table() {
-echo "create table: $this->table_name<br>";        
+        echo "create table: $this->table_name<br>";        
         $sql = 'CREATE TABLE '.$this->table_name.' (
         id int(11) unsigned NOT NULL AUTO_INCREMENT,
         name varchar(255) NOT NULL DEFAULT '',
