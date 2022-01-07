@@ -7,11 +7,11 @@
  */
 
 /**
- * DB_Films class.
+ * Films class.
  *
  * @extends DB
  */
-class DB_Films extends DB {
+class Films extends DB {
 
     /**
      * __construct function.
@@ -124,7 +124,7 @@ class DB_Films extends DB {
     public function create_table() {
         global $apidb;
 
-        $sql = 'CREATE TABLE ' . $this->table_name . ' (
+        $sql = "CREATE TABLE {$this->table_name} (
         id int(11) unsigned NOT NULL AUTO_INCREMENT,
         name varchar(255) NOT NULL DEFAULT '',
         year int(4) NOT NULL,
@@ -134,7 +134,7 @@ class DB_Films extends DB {
         date_created datetime NOT NULL,
         last_updated datetime NOT NULL,
         PRIMARY KEY (id)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;';
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
         if (!$this->table_exists()) {
             $apidb->sql( $sql );

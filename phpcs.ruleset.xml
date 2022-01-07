@@ -7,7 +7,7 @@
     <config name="testVersion" value="7.1-"/>
 
     <!-- Include file/paths -->
-    <file>./</file>
+    <file>.</file>
     
 	<!-- Exclude paths --> 
 	<exclude-pattern>*/node_modules/*</exclude-pattern>

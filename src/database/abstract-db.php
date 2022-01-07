@@ -1,9 +1,10 @@
 <?php
-
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
+/**
+ * Films database class
+ *
+ * @package PHPAPI
+ * @version 0.1.0
+ */
 
 /**
  * Abstract DB class.
@@ -15,6 +16,7 @@ abstract class DB {
     /**
      * The name of our database table
      *
+     * @var mixed
      * @access  public
      * @since   0.1.0
      */
@@ -23,6 +25,7 @@ abstract class DB {
     /**
      * The version of our database table
      *
+     * @var mixed
      * @access  public
      * @since   0.1.0
      */
@@ -31,6 +34,7 @@ abstract class DB {
     /**
      * The name of the primary column
      *
+     * @var mixed
      * @access  public
      * @since   0.1.0
      */
@@ -70,6 +74,7 @@ abstract class DB {
      * Retrieve a row by the primary key
      *
      * @access  public
+     * @param mixed $row_id int.
      * @since   0.1.0
      * @return  object
      */
@@ -83,6 +88,8 @@ abstract class DB {
      * Retrieve a row by a specific column / value
      *
      * @access  public
+     * @param mixed $column string.
+     * @param mixed $value string.
      * @since   0.1.0
      * @return  object
      */
@@ -98,6 +105,8 @@ abstract class DB {
      * Retrieve a specific column's value by the primary key
      *
      * @access  public
+     * @param mixed $column string.
+     * @param mixed $row_id int.
      * @since   0.1.0
      * @return  string
      */
@@ -113,6 +122,9 @@ abstract class DB {
      * Retrieve a specific column's value by the the specified column / value
      *
      * @access  public
+     * @param mixed $column string.
+     * @param mixed $column_where string.
+     * @param mixed $column_value string.
      * @since   0.1.0
      * @return  string
      */
@@ -129,25 +141,26 @@ abstract class DB {
      * Insert a new row
      *
      * @access  public
+     * @param mixed $data array.
      * @since   0.1.0
      * @return  int
      */
     public function insert( $data ) {
         global $apidb;
 
-        // Set default values
+        // Set default values.
         $data = parse_args( $data, $this->get_column_defaults() );
 
-        // Initialise column format array
+        // Initialise column format array.
         $column_formats = $this->get_columns();
 
-        // Force fields to lower case
+        // Force fields to lower case.
         $data = array_change_key_case( $data );
 
-        // White list columns
+        // White list columns.
         $data = array_intersect_key( $data, $column_formats );
 
-        // Reorder $column_formats to match the order of columns given in $data
+        // Reorder $column_formats to match the order of columns given in $data.
         $data_keys      = array_keys( $data );
         $column_formats = array_merge( array_flip( $data_keys ), $column_formats );
 
@@ -160,13 +173,16 @@ abstract class DB {
      * Update a row
      *
      * @access  public
+     * @param mixed  $row_id int.
+     * @param array  $data (default: array()).
+     * @param string $where (default: '').
      * @since   0.1.0
      * @return  bool
      */
     public function update( $row_id, $data = array(), $where = '' ) {
         global $apidb;
 
-        // Row ID must be positive integer
+        // Row ID must be positive integer.
         $row_id = intval( $row_id );
 
         if ( empty( $row_id ) ) {
@@ -177,16 +193,16 @@ abstract class DB {
             $where = $this->primary_key;
         }
 
-        // Initialise column format array
+        // Initialise column format array.
         $column_formats = $this->get_columns();
 
-        // Force fields to lower case
+        // Force fields to lower case.
         $data = array_change_key_case( $data );
 
-        // White list columns
+        // White list columns.
         $data = array_intersect_key( $data, $column_formats );
 
-        // Reorder $column_formats to match the order of columns given in $data
+        // Reorder $column_formats to match the order of columns given in $data.
         $data_keys      = array_keys( $data );
         $column_formats = array_merge( array_flip( $data_keys ), $column_formats );
 
@@ -201,13 +217,15 @@ abstract class DB {
      * Delete a row identified by the primary key
      *
      * @access  public
+     * @param int    $row_id (default: 0).
+     * @param string $where (default: '').
      * @since   0.1.0
      * @return  bool
      */
     public function delete( $row_id = 0, $where = '' ) {
         global $apidb;
 
-        // Row ID must be positive integer
+        // Row ID must be positive integer.
         $row_id = intval( $row_id );
 
         if ( empty( $row_id ) ) {

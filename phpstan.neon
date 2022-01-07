@@ -1,9 +1,9 @@
 parameters:
     level: 5
     paths:
-        - ./
+        - src/
+        - index.php
     excludePaths:
         - vendor/
-        - node_modules/
-        - class-db-films.php        
+        - node_modules/       
     ignoreErrors:  

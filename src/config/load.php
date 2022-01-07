@@ -1,23 +1,21 @@
 <?php
 /**
- * Films database class
+ * Load all includes
  *
  * @package PHPAPI
  * @version 0.1.0
  */
- 
-define( 'API_ROOT_PATH', __DIR__ );
 
 // Connect to MySQL database.
-include_once( API_ROOT_PATH . '/class-database.php' );
+include_once( API_ROOT_PATH . 'config/database.php' );
 
-include_once( API_ROOT_PATH . '/abstract/abstract-class-db.php' );
+//include_once( API_ROOT_PATH . 'database/abstract-db.php' );
 
-include_once( API_ROOT_PATH . '/class-db-films.php' );
+//include_once( API_ROOT_PATH . 'database/films.php' );
 
 /**
  * Parse array args.
- * 
+ *
  * @access public
  * @param mixed $args array.
  * @param array $defaults (default: array()).
