@@ -10,7 +10,7 @@ include_once( API_ROOT_PATH . '/class-db-films.php' );
 
 function parse_args( $args, $defaults = array() ) {
     $parsed_args = '';
-    
+
     if ( is_object( $args ) ) {
         $parsed_args = get_object_vars( $args );
     } elseif ( is_array( $args ) ) {
