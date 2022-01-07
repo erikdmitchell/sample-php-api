@@ -4,4 +4,6 @@ parameters:
         - ./
     excludePaths:
         - vendor/
-    ignoreErrors:
+        - node_modules/
+        - class-db-films.php        
+    ignoreErrors:  
