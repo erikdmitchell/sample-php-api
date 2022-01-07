@@ -4,9 +4,9 @@ define( 'API_ROOT_PATH', __DIR__ );
 // Connect to MySQL database.
 include_once( API_ROOT_PATH . '/class-database.php' );
 
-// abstract/abstract-class-db.php
+include_once( API_ROOT_PATH . '/abstract/abstract-class-db.php' );
 
-include_once( API_ROOT_PATH . '/db-class.php' ); // db test class.
+include_once( API_ROOT_PATH . '/class-db-films.php' );
 
 function parse_args( $args, $defaults = array() ) {
     if ( is_object( $args ) ) {
@@ -14,11 +14,12 @@ function parse_args( $args, $defaults = array() ) {
     } elseif ( is_array( $args ) ) {
         $parsed_args =& $args;
     } else {
-        wp_parse_str( $args, $parsed_args );
+        parse_args( $args, $parsed_args ); /** @phpstan-ignore-line */
     }
 
     if ( is_array( $defaults ) && $defaults ) {
         return array_merge( $defaults, $parsed_args );
     }
+
     return $parsed_args;
 }
