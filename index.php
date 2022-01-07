@@ -16,7 +16,7 @@ print_r($apidb);
 echo '</pre>';
 */
 
-$testdb = new DB();
+// $testdb = new DB(); -- do not use
 
 /*
 echo '<pre>';
