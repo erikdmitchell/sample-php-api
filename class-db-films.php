@@ -66,7 +66,7 @@ class DB_Films extends DB {
      * Insert.
      *
      * @access public
-     * @param mixed $data array
+     * @param mixed $data array.
      * @return bool
      */
     public function insert( $data ) {
@@ -84,7 +84,7 @@ class DB_Films extends DB {
      * Update.
      *
      * @access public
-     * @param mixed  $row_id int
+     * @param mixed  $row_id int.
      * @param array  $data (default: array()).
      * @param string $where (default: '').
      * @return int
@@ -103,7 +103,7 @@ class DB_Films extends DB {
      * Set last changed.
      *
      * @access public
-     * @param int $row_id (default: 0)
+     * @param int $row_id (default: 0).
      * @return bool
      */
     public function set_last_changed( $row_id = 0 ) {

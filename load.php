@@ -19,9 +19,9 @@ include_once( API_ROOT_PATH . '/class-db-films.php' );
  * Parse array args.
  * 
  * @access public
- * @param mixed $args array
+ * @param mixed $args array.
  * @param array $defaults (default: array()).
- * @return void
+ * @return array
  */
 function parse_args( $args, $defaults = array() ) {
     $parsed_args = '';
