@@ -225,8 +225,7 @@ abstract class DB {
      * Check if the given table exists
      *
      * @since  0.1.0
-     * @param  string $table The table name
-     * @return bool          If the table name exists
+     * @return bool
      */
     public function table_exists() {
         global $apidb;
