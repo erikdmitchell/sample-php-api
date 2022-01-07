@@ -1,17 +1,12 @@
 <?php
 /**
- * Load all includes
+ * General app functions.
  *
  * @package PHPAPI
  * @version 0.1.0
  */
 
-// Connect to MySQL database.
-include_once( API_ROOT_PATH . 'config/database.php' );
-
-//include_once( API_ROOT_PATH . 'database/abstract-db.php' );
-
-//include_once( API_ROOT_PATH . 'database/films.php' );
+namespace Mitchell\API\App;
 
 /**
  * Parse array args.

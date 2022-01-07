@@ -1,6 +1,21 @@
 <?php
-require API_ROOT_PATH . 'config/load.php';
-echo 'APP';
+namespace Mitchell\API\App;
+
+class App {
+    
+    public $version = '0.1.0';
+    
+    public function __construct() {
+        //echo "App construct...";
+    }
+}
+//use McFarlin\TRP\Display\Meta_Box;
+
+// Import the autoloader.
+//include_once API_ROOT_PATH . 'config/autoload.php';
+    
+//require API_ROOT_PATH . 'config/load.php';
+//echo 'APP';
 /*
 global $apidb;
 

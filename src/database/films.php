@@ -5,6 +5,10 @@
  * @package PHPAPI
  * @version 0.1.0
  */
+ 
+namespace Mitchell\API\Database;
+
+use Mitchell\API\Database\Abstracts\DB;
 
 /**
  * Films class.

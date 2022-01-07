@@ -1,10 +1,12 @@
 <?php
 /**
- * Films database class
+ * Main API class
  *
  * @package PHPAPI
  * @version 0.1.0
  */
+
+namespace Mitchell\API\API;
 
 /**
  * API class.

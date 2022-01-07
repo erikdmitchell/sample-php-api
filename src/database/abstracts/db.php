@@ -1,10 +1,12 @@
 <?php
 /**
- * Films database class
+ * Abstract database class
  *
  * @package PHPAPI
  * @version 0.1.0
  */
+ 
+namespace Mitchell\API\Database\Abstracts;
 
 /**
  * Abstract DB class.

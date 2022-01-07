@@ -6,6 +6,8 @@
  * @version 0.1.0
  */
 
+namespace Mitchell\API\Config;
+
 /**
  * Install class.
  */

@@ -1,4 +1,6 @@
 <?php
+    
+namespace Mitchell\API\Config;    
 
 class Database {
     /*
@@ -26,7 +28,7 @@ class Database {
     // Function to make connection to database
     public function connect() {
         if (!$this->connected) {
-            $this->connection = new mysqli( $this->db_host, $this->db_user, $this->db_pass, $this->db_name );  // mysql_connect() with variables defined at the start of Database class
+            $this->connection = new \mysqli( $this->db_host, $this->db_user, $this->db_pass, $this->db_name );  // mysql_connect() with variables defined at the start of Database class
 
             if ($this->connection->connect_errno > 0) {
                 array_push( $this->result, $this->connection->connect_error );
