@@ -5,7 +5,7 @@
  * @package PHPAPI
  * @version 0.1.0
  */
- 
+
 namespace Mitchell\API\Database;
 
 use Mitchell\API\Database\Abstracts\DB;
@@ -111,7 +111,7 @@ class Films extends DB {
      * @return bool
      */
     public function set_last_changed( $row_id = 0 ) {
-        global $apidb;
+        // global $apidb;
 
         if ( false === $apidb->update( $this->table_name, array( 'last_updated' => date( 'Y-m-d H:i:s' ) ), array( $this->primary_key => $row_id ) ) ) {
             return false;

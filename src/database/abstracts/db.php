@@ -5,8 +5,11 @@
  * @package PHPAPI
  * @version 0.1.0
  */
- 
+
 namespace Mitchell\API\Database\Abstracts;
+
+use Mitchell\API\Config\Database;
+
 
 /**
  * Abstract DB class.
@@ -81,9 +84,7 @@ abstract class DB {
      * @return  object
      */
     public function get( $row_id ) {
-        global $apidb;
-
-        return $apidb->get_row( sprintf( "SELECT * FROM $this->table_name WHERE $this->primary_key = %s LIMIT 1;", $row_id ) );
+        return Database::getInstance()->get_row( sprintf( "SELECT * FROM $this->table_name WHERE $this->primary_key = %s LIMIT 1;", $row_id ) );
     }
 
     /**
@@ -96,11 +97,10 @@ abstract class DB {
      * @return  object
      */
     public function get_by( $column, $value ) {
-        global $apidb;
 
         // $column = esc_sql( $column ); // $apidb->esc_string( $column );
 
-        return $apidb->get_row( sprintf( "SELECT * FROM $this->table_name WHERE $column = %s LIMIT 1;", $value ) );
+        return Database::getInstance()->get_row( sprintf( "SELECT * FROM $this->table_name WHERE $column = %s LIMIT 1;", $value ) );
     }
 
     /**
@@ -113,11 +113,10 @@ abstract class DB {
      * @return  string
      */
     public function get_column( $column, $row_id ) {
-        global $apidb;
 
         // $column = esc_sql( $column ); // $apidb->esc_string( $column );
 
-        return $apidb->get_var( sprintf( "SELECT $column FROM $this->table_name WHERE $this->primary_key = %s LIMIT 1;", $row_id ) );
+        return Database::getInstance()->get_var( sprintf( "SELECT $column FROM $this->table_name WHERE $this->primary_key = %s LIMIT 1;", $row_id ) );
     }
 
     /**
@@ -131,12 +130,11 @@ abstract class DB {
      * @return  string
      */
     public function get_column_by( $column, $column_where, $column_value ) {
-        global $apidb;
 
         // $column_where = esc_sql( $column_where ); // $apidb->esc_string( $column_where );
         // $column = esc_sql( $column ); // $apidb->esc_string( $column );
 
-        return $apidb->get_var( sprintf( "SELECT $column FROM $this->table_name WHERE $column_where = %s LIMIT 1;", $column_value ) );
+        return Database::getInstance()->get_var( sprintf( "SELECT $column FROM $this->table_name WHERE $column_where = %s LIMIT 1;", $column_value ) );
     }
 
     /**
@@ -148,7 +146,6 @@ abstract class DB {
      * @return  int
      */
     public function insert( $data ) {
-        global $apidb;
 
         // Set default values.
         $data = parse_args( $data, $this->get_column_defaults() );
@@ -166,9 +163,9 @@ abstract class DB {
         $data_keys      = array_keys( $data );
         $column_formats = array_merge( array_flip( $data_keys ), $column_formats );
 
-        $apidb->insert( $this->table_name, $data );
+        Database::getInstance()->insert( $this->table_name, $data );
 
-        return $apidb->insert_id();
+        return Database::getInstance()->insert_id();
     }
 
     /**
@@ -182,7 +179,6 @@ abstract class DB {
      * @return  bool
      */
     public function update( $row_id, $data = array(), $where = '' ) {
-        global $apidb;
 
         // Row ID must be positive integer.
         $row_id = intval( $row_id );
@@ -208,7 +204,7 @@ abstract class DB {
         $data_keys      = array_keys( $data );
         $column_formats = array_merge( array_flip( $data_keys ), $column_formats );
 
-        if ( false === $apidb->update( $this->table_name, $data, array( $where => $row_id ) ) ) {
+        if ( false === Database::getInstance()->update( $this->table_name, $data, array( $where => $row_id ) ) ) {
             return false;
         }
 
@@ -225,7 +221,6 @@ abstract class DB {
      * @return  bool
      */
     public function delete( $row_id = 0, $where = '' ) {
-        global $apidb;
 
         // Row ID must be positive integer.
         $row_id = intval( $row_id );
@@ -234,7 +229,7 @@ abstract class DB {
             return false;
         }
 
-        if ( false === $apidb->delete( $this->table_name, $this->primary_key . ' = ' . $row_id ) ) {
+        if ( false === Database::getInstance()->delete( $this->table_name, $this->primary_key . ' = ' . $row_id ) ) {
             return false;
         }
 
@@ -248,9 +243,7 @@ abstract class DB {
      * @return bool
      */
     public function table_exists() {
-        global $apidb;
-
-        return $apidb->table_exists( $this->table_name );
+        return Database::getInstance()->table_exists( $this->table_name );
     }
 
 }
