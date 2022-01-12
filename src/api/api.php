@@ -8,6 +8,8 @@
 
 namespace Mitchell\API\API;
 
+use Mitchell\API\Database\Films;
+
 /**
  * API class.
  */
@@ -16,7 +18,7 @@ class API {
     public function __construct() {}
 
     public function create() {
-        global $db;
+        //global $db;
 
 		/*
 		header("Access-Control-Allow-Origin: *");
@@ -50,13 +52,18 @@ class API {
 
     }
 
-    public function read() {
-		header( 'Access-Control-Allow-Origin: *' );
-		header( 'Content-Type: application/json; charset=UTF-8' );
+    public function get() {
+		//header( 'Access-Control-Allow-Origin: *' );
+		//header( 'Content-Type: application/json; charset=UTF-8' );
 
+/*
 		include_once '../config/database.php';
 		include_once '../class/users.php';
+*/
+$f = new Films();
+$f->get_films();
 
+/*
 		$database = new DB();
 		$db       = $database->getConnection();
 
@@ -93,6 +100,7 @@ class API {
                 array('message' => 'Data not found.')
 			);
 		}
+*/
     }
 
     public function update() {
