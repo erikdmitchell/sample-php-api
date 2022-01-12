@@ -136,6 +136,13 @@ abstract class DB {
 
         return Database::getInstance()->get_var( sprintf( "SELECT $column FROM $this->table_name WHERE $column_where = %s LIMIT 1;", $column_value ) );
     }
+    
+    public function query( $query = '' ) {
+        // clean query?
+        $result = Database::getInstance()->sql($query);        
+ 
+        return Database::get_result();
+    }
 
     /**
      * Insert a new row

@@ -44,13 +44,13 @@ class Database {
      *
      * @return Database
      */
-    public static function getInstance( $args = array() ) {
+    public static function getInstance( $args = array() ) {       
         if (is_null( static::$instance )) {
             $defaults = array(
                 'db_host' => 'localhost',
                 'db_user' => 'root',
                 'db_pass' => 'root',
-                'db_name' => 'db',
+                'db_name' => 'nonwp',
             );
 
             $args = parse_args( $args, $defaults );
@@ -109,7 +109,7 @@ class Database {
 
     public function connect() {
         // if not already connected, connect :).
-        if (!$this->connected) {
+        if (!$this->connected) { 
             $this->connection = new \mysqli( $this->db_host, $this->db_user, $this->db_pass, $this->db_name );
 
             // checks for error and pushes it to the result var, otherwise return true.
@@ -408,7 +408,7 @@ class Database {
     }
 
     // Public function to return the data to the user
-    public function get_result() {
+    public static function get_result() {
         $val          = $this->result;
         $this->result = array();
         return $val;

@@ -22,20 +22,41 @@ print_r($app);
 echo '</pre>';
 */
 
-// global $apidb;
+use Mitchell\API\API\API; // what a shitty namespace!
 
-$dbuser = 'wp';
-$dbpass = 'wp';
-$dbname = 'nonwp';
+echo '<h2>API GET</h2>';
 
+$api = new API();
+
+//$base = 'films'; // passed via request param
+
+echo '<pre>';
+//print_r($_SERVER);
+print_r($_REQUEST);
+//print_r($_GET);
+echo '</pre>';
+
+if (isset($_REQUEST['films'])) {  
+    $api->get('films');
+}
+
+// Accept only numbers as parameter. Other characters will result in a 404 error
 /*
-$apidb = new Mitchell\API\Config\Database;
-$apidb->connect();
+Route::add('/foo/([0-9]*)/bar', function($var1) {
+  navi();
+  echo $var1.' is a great number!';
+});
+
+// Crazy route with parameters
+Route::add('/(.*)/(.*)/(.*)/(.*)', function($var1,$var2,$var3,$var4) {
+  navi();
+  echo 'This is the first match: '.$var1.' / '.$var2.' / '.$var3.' / '.$var4.'<br>';
+});
 */
 
 
 // Retrieve the singleton client instance.
-$db = Mitchell\API\Config\Database::getInstance( array('db_name' => 'nonwp') );
+//$db = Mitchell\API\Config\Database::getInstance( array('db_name' => 'nonwp') );
 
 // Make use of our client instance.
 // $results = $db->connect();
