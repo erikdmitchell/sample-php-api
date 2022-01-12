@@ -53,21 +53,15 @@ class API {
     }
 
     public function get() {
-		//header( 'Access-Control-Allow-Origin: *' );
-		//header( 'Content-Type: application/json; charset=UTF-8' );
+		header( 'Access-Control-Allow-Origin: *' );
+		header( 'Content-Type: application/json; charset=UTF-8' );
 
-/*
-		include_once '../config/database.php';
-		include_once '../class/users.php';
-*/
 $f = new Films();
-$f->get_films();
-
+$x = $f->get_films();
+print_r($x);
+echo database()->num_rows();
 /*
-		$database = new DB();
-		$db       = $database->getConnection();
 
-		$items = new User( $db );
 
 		$stmt      = $items->getUsers();
 		$itemCount = $stmt->rowCount();

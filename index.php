@@ -12,6 +12,24 @@ require_once __DIR__ . '/autoload.php';
 
 include_once( API_ROOT_PATH . 'app/functions.php' );
 
+
+// Load core packages and the autoloader.
+/*
+require __DIR__ . '/src/Autoloader.php';
+require __DIR__ . '/src/Packages.php';
+*/
+
+/*
+if ( ! \Automattic\WooCommerce\Autoloader::init() ) {
+	return;
+}
+\Automattic\WooCommerce\Packages::init();
+*/
+
+function database() {
+	return Mitchell\API\Config\Database::getInstance();
+}
+
 $app = new Mitchell\API\App\App;
 
 echo '<h1>Welcome to the App</h1>';
@@ -68,7 +86,7 @@ print_r($db);
 echo '</pre>';
 */
 
-$films_db = new Mitchell\API\Database\Films;
+//$films_db = new Mitchell\API\Database\Films;
 
 /*
 echo '<pre>';
@@ -149,4 +167,45 @@ $db->select($table, $rows, $join, $where, $order, $limit);
 print_r($db->get_result());
 echo '</pre>';
 // echo $testdb->delete($test_row_id);
+*/
+
+
+	/**
+	 * Load REST API.
+	 */
+/*
+	public function load_rest_api() {
+		\Automattic\WooCommerce\RestApi\Server::instance()->init();
+	}
+*/
+
+
+
+	/**
+	 * Return the WC API URL for a given request.
+	 *
+	 * @param string    $request Requested endpoint.
+	 * @param bool|null $ssl     If should use SSL, null if should auto detect. Default: null.
+	 * @return string
+	 */
+/*
+	public function api_request_url( $request, $ssl = null ) {
+		if ( is_null( $ssl ) ) {
+			$scheme = wp_parse_url( home_url(), PHP_URL_SCHEME );
+		} elseif ( $ssl ) {
+			$scheme = 'https';
+		} else {
+			$scheme = 'http';
+		}
+
+		if ( strstr( get_option( 'permalink_structure' ), '/index.php/' ) ) {
+			$api_request_url = trailingslashit( home_url( '/index.php/wc-api/' . $request, $scheme ) );
+		} elseif ( get_option( 'permalink_structure' ) ) {
+			$api_request_url = trailingslashit( home_url( '/wc-api/' . $request, $scheme ) );
+		} else {
+			$api_request_url = add_query_arg( 'wc-api', $request, trailingslashit( home_url( '', $scheme ) ) );
+		}
+
+		return esc_url_raw( apply_filters( 'woocommerce_api_request_url', $api_request_url, $request, $ssl ) );
+	}
 */

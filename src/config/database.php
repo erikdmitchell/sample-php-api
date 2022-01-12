@@ -8,17 +8,16 @@
 
 namespace Mitchell\API\Config;
 
-/**
- * Database class.
- */
-class Database {
+final class Database {
+    
+	public $version = '0.1.0';    
 
     /**
      * Our single database client instance.
      *
      * @var Database
      */
-    private static $instance;
+    protected static $_instance = null;
 
     private $connected = false; // Check to see if the connection is active
 
@@ -44,8 +43,16 @@ class Database {
      *
      * @return Database
      */
-    public static function getInstance( $args = array() ) {       
-        if (is_null( static::$instance )) {
+    public static function getInstance( $args = array() ) { 
+
+/*
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+		return self::$_instance;
+*/
+	              
+        if (is_null( static::$_instance )) {
             $defaults = array(
                 'db_host' => 'localhost',
                 'db_user' => 'root',
@@ -55,18 +62,18 @@ class Database {
 
             $args = parse_args( $args, $defaults );
 
-            static::$instance = new Database;
-            static::$instance->set_host( $args['db_host'] );
-            static::$instance->set_port( 3306 );
-            static::$instance->set_username( $args['db_user'] );
-            static::$instance->set_password( $args['db_pass'] );
-            static::$instance->set_name( $args['db_name'] );
+            static::$_instance = new Database;
+            static::$_instance->set_host( $args['db_host'] );
+            static::$_instance->set_port( 3306 );
+            static::$_instance->set_username( $args['db_user'] );
+            static::$_instance->set_password( $args['db_pass'] );
+            static::$_instance->set_name( $args['db_name'] );
 
             // connect.
-            static::$instance->connect();
+            static::$_instance->connect();
         }
 
-        return static::$instance;
+        return static::$_instance;
     }
 
     /**
@@ -408,7 +415,7 @@ class Database {
     }
 
     // Public function to return the data to the user
-    public static function get_result() {
+    public function get_result() {
         $val          = $this->result;
         $this->result = array();
         return $val;

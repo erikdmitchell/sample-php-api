@@ -10,7 +10,6 @@ namespace Mitchell\API\Database\Abstracts;
 
 use Mitchell\API\Config\Database;
 
-
 /**
  * Abstract DB class.
  *
@@ -138,10 +137,13 @@ abstract class DB {
     }
     
     public function query( $query = '' ) {
-        // clean query?
-        $result = Database::getInstance()->sql($query);        
- 
-        return Database::get_result();
+        // clean query?        
+        $result = database()->sql($query);
+        
+        $results = database()->get_result();
+        //$results['num_rows'] = database()->num_rows();
+
+        return $results;
     }
 
     /**

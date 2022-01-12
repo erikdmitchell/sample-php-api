@@ -106,8 +106,7 @@ class Films extends DB {
     
     public function get_films($args='') {
         $result = parent::query( "SELECT * FROM $this->table_name;" );        
-echo "get_films via films db call:<br>";
-print_r($result);        
+      
         return $result;
     }
 
