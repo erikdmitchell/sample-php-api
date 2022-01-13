@@ -25,6 +25,10 @@ function navi() {
   echo '
   Navigation:
   <ul>
+    <li><a href="'.BASEPATH.'films">Films</a></li>
+    <li><a href="'.BASEPATH.'film/3">Film (ID: 3)</a></li>
+  </ul>
+  <ul>
       <li><a href="'.BASEPATH.'">home</a></li>
       <li><a href="'.BASEPATH.'index.php">index.php</a></li>
       <li><a href="'.BASEPATH.'user/3/edit">edit user 3</a></li>
@@ -51,36 +55,33 @@ function navi() {
   ';
 }
 
-// Add base route (startpage)
-Route::add('/', function() {
-  navi();
-  echo 'Welcome :-)';
+use Mitchell\API\Database\Films;
+
+Route::add('/films', function() {
+    navi();
+    
+    $films_class = new Films();
+    $films = $films_class->get_films();
 });
 
-// Another base route example
-Route::add('/index.php', function() {
-  navi();
-  echo 'You are not really on index.php ;-)';
+// Route with regexp parameter
+// Be aware that (.*) will match / (slash) too. For example: /user/foo/bar/edit
+// Also users could inject SQL statements or other untrusted data if you use (.*)
+// You should better use a saver expression like /user/([0-9]*)/edit or /user/([A-Za-z]*)/edit
+Route::add('/film/(.*)', function($id) {
+    navi();
+    
+    $films_class = new Films();
+    $films = $films_class->get_films(array('id' => 3));
 });
 
-// Simple test route that simulates static html file
-Route::add('/test.html', function() {
-  navi();
-  echo 'Hello from test.html';
-});
+
+// EXAMPLES.
 
 // This example shows how to include files and how to push data to them
 Route::add('/blog/([a-z-0-9-]*)', function($slug) {
   navi();
   include('include-example.php');
-});
-
-// This route is for debugging only
-// It simply prints out some php infos
-// Do not use this route on production systems!
-Route::add('/phpinfo', function() {
-  navi();
-  phpinfo();
 });
 
 // Get route example
@@ -128,59 +129,11 @@ Route::add('/(.*)/(.*)/(.*)/(.*)', function($var1,$var2,$var3,$var4) {
   echo 'This is the first match: '.$var1.' / '.$var2.' / '.$var3.' / '.$var4.'<br>';
 });
 
-// Long route example
-// By default this route gets never triggered because the route before matches too
-Route::add('/foo/bar/foo/bar', function() {
-  echo 'This is the second match (This route should only work in multi match mode) <br>';
-});
-
-// Route with non english letters: german example
-Route::add('/äöü', function() {
-  navi();
-  echo 'German example. Non english letters should work too <br>';
-});
-
-// Route with non english letters: arabic example
-Route::add('/الرقص-العربي', function() {
-  navi();
-  echo 'Arabic example. Non english letters should work too <br>';
-});
-
-// Use variables from global scope
-// You can use for example use() to inject variables to local scope
-// You can use global to register the variable in local scope
-$foo = 'foo';
-$bar = 'bar';
-Route::add('/global/([a-z-0-9-]*)', function($param) use($foo) {
-  global $bar;
-  navi();
-  echo 'The param is '.$param.'<br/>';
-  echo 'Foo is '.$foo.'<br/>';
-  echo 'Bar is '.$bar.'<br/>';
-});
-
 // Return example
 // Returned data gets printed
 Route::add('/return', function() {
   navi();
   return 'This text gets returned by the add method';
-});
-
-// Arrow function example
-// Note: You can use this example only if you are on PHP 7.4 or higher
-// $bar = 'bar';
-// Route::add('/arrow/([a-z-0-9-]*)', fn($foo) => navi().'This is a working arrow function example. <br/> Parameter: '.$foo. ' <br/> Variable from global scope: '.$bar );
-
-// Trailing slash example
-Route::add('/aTrailingSlashDoesNotMatter', function() {
-  navi();
-  echo 'a trailing slash does not matter<br>';
-});
-
-// Case example
-Route::add('/theCaseDoesNotMatter',function() {
-  navi();
-  echo 'the case does not matter<br>';
 });
 
 // 405 test
@@ -190,15 +143,6 @@ Route::add('/this-route-is-defined', function() {
 }, 'patch');
 
 // Add a 404 not found route
-Route::pathNotFound(function($path) {
-  // Do not forget to send a status header back to the client
-  // The router will not send any headers by default
-  // So you will have the full flexibility to handle this case
-  header('HTTP/1.0 404 Not Found');
-  navi();
-  echo 'Error 404 :-(<br>';
-  echo 'The requested path "'.$path.'" was not found!';
-});
 
 // Add a 405 method not allowed route
 Route::methodNotAllowed(function($path, $method) {
@@ -224,63 +168,13 @@ Route::add('/known-routes', function() {
 
 // Run the Router with the given Basepath
 Route::run(BASEPATH);
-*/
+
 
 // Enable case sensitive mode, trailing slashes and multi match mode by setting the params to true
 // Route::run(BASEPATH, true, true, true);
-
-/*
-require __DIR__ . '/src/Autoloader.php';
-require __DIR__ . '/src/Packages.php';
-*/
-
-/*
-if ( ! \Automattic\WooCommerce\Autoloader::init() ) {
-	return;
-}
-\Automattic\WooCommerce\Packages::init();
-*/
 
 $app = new Mitchell\API\App\App;
 
 echo '<h1>Welcome to the App</h1>';
 
-echo '<a href="routes.php">Routes</a>';
-echo '<br>';
 echo '<a href="tests.php">Tests</a>';
-
-/*
-echo '<pre>';
-print_r($app);
-echo '</pre>';
-*/
-
-
-
-// Accept only numbers as parameter. Other characters will result in a 404 error
-/*
-Route::add('/foo/([0-9]*)/bar', function($var1) {
-  navi();
-  echo $var1.' is a great number!';
-});
-
-// Crazy route with parameters
-Route::add('/(.*)/(.*)/(.*)/(.*)', function($var1,$var2,$var3,$var4) {
-  navi();
-  echo 'This is the first match: '.$var1.' / '.$var2.' / '.$var3.' / '.$var4.'<br>';
-});
-*/
-
-use Mitchell\API\Database\Films;
-
-        $films_class = new Films();
-        $films = $films_class->get_films(array('id' => 3));
-print_r($films);        
-
-?>
-<h2>Rutes</h2>
-
-<ul>
-    <li><a href="routes.php?films">Films</a>
-    <li><a href="routes.php?film&id=3">Film (ID: 3)</a>    
-</ul>
