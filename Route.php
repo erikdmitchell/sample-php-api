@@ -63,7 +63,7 @@ class Route {
     }
 
   	$path = urldecode($path);
-echo "p: $path<br>";
+  	
     // Get current request method
     $method = $_SERVER['REQUEST_METHOD'];
 
@@ -72,16 +72,13 @@ echo "p: $path<br>";
     $route_match_found = false;
 
     foreach (self::$routes as $route) {
-echo '<pre>';
-print_r($route);
-echo '</pre>';
       // If the method matches check the path
 
       // Add basepath to matching string
       if ($basepath != '' && $basepath != '/') {
         $route['expression'] = '('.$basepath.')'.$route['expression'];
       }
-echo $route['expression'];
+
       // Add 'find string start' automatically
       $route['expression'] = '^'.$route['expression'];
 
