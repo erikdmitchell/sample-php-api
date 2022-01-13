@@ -105,7 +105,19 @@ class Films extends DB {
     }
     
     public function get_films($args='') {
-        $result = parent::query( "SELECT * FROM $this->table_name;" );        
+        $where = array();
+        $limit = '';
+        
+        if (isset($args['id'])) {
+            $where['id'] = intval($args['id']);
+            $limit = " LIMIT = 1";
+        }
+        
+        if (!empty($where)) {
+            $where = ' WHERE ' . implode(' AND ', $where);
+        }
+echo "SELECT * FROM $this->table_name{$where}{$limit};";        
+        $result = parent::query( "SELECT * FROM $this->table_name{$where}{$limit};" );        
       
         return $result;
     }
