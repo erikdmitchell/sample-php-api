@@ -110,13 +110,20 @@ class Films extends DB {
         
         if (isset($args['id'])) {
             $where['id'] = intval($args['id']);
-            $limit = " LIMIT = 1";
         }
         
         if (!empty($where)) {
-            $where = ' WHERE ' . implode(' AND ', $where);
+            $where_arr = array();
+            
+            foreach ($where as $key => $value) {
+                $where_arr[] = "$key = '$value'";
+            }
+            
+            $where = ' WHERE ' . implode(' AND ', $where_arr);
+        } else {
+            $where = '';
         }
-echo "SELECT * FROM $this->table_name{$where}{$limit};";        
+       
         $result = parent::query( "SELECT * FROM $this->table_name{$where}{$limit};" );        
       
         return $result;

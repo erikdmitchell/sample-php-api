@@ -22,37 +22,14 @@ include 'Route.php';
 define('BASEPATH','/api/');
 
 function navi() {
-  echo '
-  Navigation:
-  <ul>
-    <li><a href="'.BASEPATH.'films">Films</a></li>
-    <li><a href="'.BASEPATH.'film/3">Film (ID: 3)</a></li>
-  </ul>
-  <ul>
-      <li><a href="'.BASEPATH.'">home</a></li>
-      <li><a href="'.BASEPATH.'index.php">index.php</a></li>
-      <li><a href="'.BASEPATH.'user/3/edit">edit user 3</a></li>
-      <li><a href="'.BASEPATH.'foo/5/bar">foo 5 bar</a></li>
-      <li><a href="'.BASEPATH.'foo/bar/foo/bar">long route example</a></li>
-      <li><a href="'.BASEPATH.'contact-form">contact form</a></li>
-      <li><a href="'.BASEPATH.'get-post-sample">get+post example</a></li>
-      <li><a href="'.BASEPATH.'test.html">test.html</a></li>
-      <li><a href="'.BASEPATH.'blog/how-to-use-include-example">How to push data to included files</a></li>
-      <li><a href="'.BASEPATH.'phpinfo">PHP Info</a></li>
-      <li><a href="'.BASEPATH.'äöü">Non english route: german</a></li>
-      <li><a href="'.BASEPATH.'الرقص-العربي">Non english route: arabic</a></li>
-      <li><a href="'.BASEPATH.'global/test123">Inject variables to local scope</a></li>
-      <li><a href="'.BASEPATH.'return">Return instead of echo test</a></li>
-      <li><a href="'.BASEPATH.'arrow/test123">Arrow function test (please enable this route first)</a></li>
-      <li><a href="'.BASEPATH.'aTrailingSlashDoesNotMatter">aTrailingSlashDoesNotMatter</a></li>
-      <li><a href="'.BASEPATH.'aTrailingSlashDoesNotMatter/">aTrailingSlashDoesNotMatter/</a></li>
-      <li><a href="'.BASEPATH.'theCaseDoesNotMatter">theCaseDoesNotMatter</a></li>
-      <li><a href="'.BASEPATH.'thecasedoesnotmatter">thecasedoesnotmatter</a></li>
-      <li><a href="'.BASEPATH.'this-route-is-not-defined">404 Test</a></li>
-      <li><a href="'.BASEPATH.'this-route-is-defined">405 Test</a></li>
-      <li><a href="'.BASEPATH.'known-routes">known routes</a></li>
-  </ul>
-  ';
+    echo '
+        Navigation:
+
+        <ul>
+            <li><a href="'.BASEPATH.'films">Films</a></li>
+            <li><a href="'.BASEPATH.'film/3">Film (ID: 3)</a></li>
+        </ul>
+    ';
 }
 
 use Mitchell\API\Database\Films;
@@ -62,6 +39,7 @@ Route::add('/films', function() {
     
     $films_class = new Films();
     $films = $films_class->get_films();
+print_r($films);
 });
 
 // Route with regexp parameter
@@ -73,6 +51,7 @@ Route::add('/film/(.*)', function($id) {
     
     $films_class = new Films();
     $films = $films_class->get_films(array('id' => 3));
+print_r($films);    
 });
 
 
@@ -172,9 +151,3 @@ Route::run(BASEPATH);
 
 // Enable case sensitive mode, trailing slashes and multi match mode by setting the params to true
 // Route::run(BASEPATH, true, true, true);
-
-$app = new Mitchell\API\App\App;
-
-echo '<h1>Welcome to the App</h1>';
-
-echo '<a href="tests.php">Tests</a>';
