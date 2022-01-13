@@ -8,6 +8,7 @@
 
 namespace Mitchell\API\Database;
 
+use Mitchell\API\Config\Database;
 use Mitchell\API\Database\Abstracts\DB;
 
 /**
@@ -102,6 +103,24 @@ class Films extends DB {
 
         return $result;
     }
+    
+    public function get_films($args='') {
+        $where = array();
+        $limit = '';
+        
+        if (isset($args['id'])) {
+            $where['id'] = intval($args['id']);
+            $limit = " LIMIT = 1";
+        }
+        
+        if (!empty($where)) {
+            $where = ' WHERE ' . implode(' AND ', $where);
+        }
+echo "SELECT * FROM $this->table_name{$where}{$limit};";        
+        $result = parent::query( "SELECT * FROM $this->table_name{$where}{$limit};" );        
+      
+        return $result;
+    }
 
     /**
      * Set last changed.
@@ -111,9 +130,8 @@ class Films extends DB {
      * @return bool
      */
     public function set_last_changed( $row_id = 0 ) {
-        // global $apidb;
-
-        if ( false === $apidb->update( $this->table_name, array( 'last_updated' => date( 'Y-m-d H:i:s' ) ), array( $this->primary_key => $row_id ) ) ) {
+        // this actually should be our DB class.
+        if ( false === Database::getInstance()->update( $this->table_name, array( 'last_updated' => date( 'Y-m-d H:i:s' ) ), array( $this->primary_key => $row_id ) ) ) {
             return false;
         }
 
@@ -126,8 +144,6 @@ class Films extends DB {
      * @since 0.1.0
      */
     public function create_table() {
-        global $apidb;
-
         $sql = "CREATE TABLE {$this->table_name} (
         id int(11) unsigned NOT NULL AUTO_INCREMENT,
         name varchar(255) NOT NULL DEFAULT '',
@@ -140,8 +156,9 @@ class Films extends DB {
         PRIMARY KEY (id)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
+        // this actually should be our DB class.
         if (!$this->table_exists()) {
-            $apidb->sql( $sql );
+            Database::getInstance()->sql( $sql );
         }
     }
 

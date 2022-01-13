@@ -21,3 +21,7 @@ function parse_args( $args, $defaults = array() ) {
 
     return $parsed_args;
 }
+
+function database() {
+	return Mitchell\API\Config\Database::getInstance();
+}

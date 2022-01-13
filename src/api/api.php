@@ -8,6 +8,8 @@
 
 namespace Mitchell\API\API;
 
+use Mitchell\API\Database\Films;
+
 /**
  * API class.
  */
@@ -16,7 +18,7 @@ class API {
     public function __construct() {}
 
     public function create() {
-        global $db;
+        //global $db;
 
 		/*
 		header("Access-Control-Allow-Origin: *");
@@ -50,43 +52,18 @@ class API {
 
     }
 
-    public function read() {
+    public function get() {
 		header( 'Access-Control-Allow-Origin: *' );
 		header( 'Content-Type: application/json; charset=UTF-8' );
 
-		include_once '../config/database.php';
-		include_once '../class/users.php';
+        $films_class = new Films();
+        $films = $films_class->get_films();
+        $item_count = database()->num_rows();
 
-		$database = new DB();
-		$db       = $database->getConnection();
+		echo json_encode( $item_count );
 
-		$items = new User( $db );
-
-		$stmt      = $items->getUsers();
-		$itemCount = $stmt->rowCount();
-
-		echo json_encode( $itemCount );
-
-		if ($itemCount > 0) {
-
-			$userArr              = array();
-			$userArr['body']      = array();
-			$userArr['itemCount'] = $itemCount;
-
-			while ($row = $stmt->fetch( PDO::FETCH_ASSOC )) {
-				extract( $row );
-				$e = array(
-                'id' => $id,
-                'name' => $name,
-                'email' => $email,
-                'age' => $age,
-                'profile' => $profile,
-                'created' => $created
-				);
-
-				array_push( $userArr['body'], $e );
-			}
-			echo json_encode( $userArr );
+		if ($item_count > 0) {
+			echo json_encode( $films );
 		} else {
 			http_response_code( 404 );
 			echo json_encode(

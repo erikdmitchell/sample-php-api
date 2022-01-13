@@ -10,7 +10,6 @@ namespace Mitchell\API\Database\Abstracts;
 
 use Mitchell\API\Config\Database;
 
-
 /**
  * Abstract DB class.
  *
@@ -135,6 +134,16 @@ abstract class DB {
         // $column = esc_sql( $column ); // $apidb->esc_string( $column );
 
         return Database::getInstance()->get_var( sprintf( "SELECT $column FROM $this->table_name WHERE $column_where = %s LIMIT 1;", $column_value ) );
+    }
+    
+    public function query( $query = '' ) {
+        // clean query?        
+        $result = database()->sql($query);
+        
+        $results = database()->get_result();
+        //$results['num_rows'] = database()->num_rows();
+
+        return $results;
     }
 
     /**

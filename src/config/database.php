@@ -8,17 +8,16 @@
 
 namespace Mitchell\API\Config;
 
-/**
- * Database class.
- */
-class Database {
+final class Database {
+    
+	public $version = '0.1.0';    
 
     /**
      * Our single database client instance.
      *
      * @var Database
      */
-    private static $instance;
+    protected static $_instance = null;
 
     private $connected = false; // Check to see if the connection is active
 
@@ -44,29 +43,37 @@ class Database {
      *
      * @return Database
      */
-    public static function getInstance( $args = array() ) {
-        if (is_null( static::$instance )) {
+    public static function getInstance( $args = array() ) { 
+
+/*
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+		return self::$_instance;
+*/
+	              
+        if (is_null( static::$_instance )) {
             $defaults = array(
                 'db_host' => 'localhost',
                 'db_user' => 'root',
                 'db_pass' => 'root',
-                'db_name' => 'db',
+                'db_name' => 'nonwp',
             );
 
             $args = parse_args( $args, $defaults );
 
-            static::$instance = new Database;
-            static::$instance->set_host( $args['db_host'] );
-            static::$instance->set_port( 3306 );
-            static::$instance->set_username( $args['db_user'] );
-            static::$instance->set_password( $args['db_pass'] );
-            static::$instance->set_name( $args['db_name'] );
+            static::$_instance = new Database;
+            static::$_instance->set_host( $args['db_host'] );
+            static::$_instance->set_port( 3306 );
+            static::$_instance->set_username( $args['db_user'] );
+            static::$_instance->set_password( $args['db_pass'] );
+            static::$_instance->set_name( $args['db_name'] );
 
             // connect.
-            static::$instance->connect();
+            static::$_instance->connect();
         }
 
-        return static::$instance;
+        return static::$_instance;
     }
 
     /**
@@ -109,7 +116,7 @@ class Database {
 
     public function connect() {
         // if not already connected, connect :).
-        if (!$this->connected) {
+        if (!$this->connected) { 
             $this->connection = new \mysqli( $this->db_host, $this->db_user, $this->db_pass, $this->db_name );
 
             // checks for error and pushes it to the result var, otherwise return true.
