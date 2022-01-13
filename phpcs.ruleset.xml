@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+<ruleset name="API Coding Standards">
+	<!-- See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-ruleset.xml -->
+
+	<description>API PHP_CodeSniffer ruleset.</description>
+
+    <config name="testVersion" value="7.1-"/>
+
+    <!-- Include file/paths -->
+    <file>.</file>
+    
+	<!-- Exclude paths --> 
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>    
+
+	<!-- Only check PHP files. -->
+	<arg name="extensions" value="php"/>
+
+	<!-- Show progress, show the error codes for each message (source). -->
+	<arg value="sp"/>
+
+	<!-- Strip the filepaths down to the relevant bit. -->
+	<arg name="basepath" value="."/>
+
+	<!-- Default tab width for indentation fixes and such. -->
+	<arg name="tab-width" value="4"/>
+
+	<!-- Rules -->
+	<rule ref="PHPCompatibility"/>
+	
+	<rule ref="./phpcs-inline-docs.xml"/>
+
+	<!-- Covers rule: Use single and double quotes when appropriate.
+		 If you're not evaluating anything in the string, use single quotes. -->
+	<rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired"/>
+
+	<!-- Covers rule: Your indentation should always reflect logical structure. -->
+	<rule ref="Generic.WhiteSpace.ScopeIndent">
+		<properties>
+			<property name="exact" value="false"/>
+			<property name="indent" value="4"/>
+			<property name="tabIndent" value="true"/>
+			<property name="ignoreIndentationTokens" type="array">
+				<element value="T_HEREDOC"/>
+				<element value="T_NOWDOC"/>
+				<element value="T_INLINE_HTML"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Covers rule: For switch structures case should indent one tab from the
+		 switch statement and break one tab from the case statement. -->
+	<rule ref="PSR2.ControlStructures.SwitchDeclaration"/>
+	
+	<!-- Prevent duplicate messages for the same issue. Covered by other sniffs. -->
+	<rule ref="PSR2.ControlStructures.SwitchDeclaration.NotLower">
+		<severity>0</severity>
+	</rule>
+	<rule ref="PSR2.ControlStructures.SwitchDeclaration.BreakNotNewLine">
+		<severity>0</severity>
+	</rule>
+	<rule ref="PSR2.ControlStructures.SwitchDeclaration.BodyOnNextLine">
+		<severity>0</severity>
+	</rule>
+
+	<!-- Implied through the examples: align the assignment operator in a block of assignments and align the double arrows. -->
+	<rule ref="Generic.Formatting.MultipleStatementAlignment">
+		<properties>
+			<property name="maxPadding" value="40"/>
+			<property name="maxColumn" value="60"/>
+		</properties>
+	</rule>
+
+	<!-- Covers rule: Braces shall be used for all blocks. -->
+	<rule ref="Squiz.ControlStructures.ControlSignature"/>
+
+	<!-- Covers rule: Braces should always be used, even when they are not required. -->
+	<rule ref="Generic.ControlStructures.InlineControlStructure"/>
+
+	<!-- Covers rule: ... use elseif for conditionals. -->
+	<rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
+
+	<!-- Covers rule: When embedding multi-line PHP snippets within a HTML block, the
+		 PHP open and close tags must be on a line by themselves. -->
+	<rule ref="Squiz.PHP.EmbeddedPhp"/>
+	<rule ref="Squiz.PHP.EmbeddedPhp.SpacingBefore">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Squiz.PHP.EmbeddedPhp.Indent">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Squiz.PHP.EmbeddedPhp.OpenTagIndent">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Squiz.PHP.EmbeddedPhp.SpacingAfter">
+		<severity>0</severity>
+	</rule>
+
+	<!-- Covers rule: Never use shorthand PHP start tags. Always use full PHP tags. -->
+	<rule ref="Generic.PHP.DisallowShortOpenTag"/>
+	<rule ref="Generic.PHP.DisallowAlternativePHPTags"/>
+
+	<!-- Covers rule: Remove trailing whitespace at the end of each line of code. -->
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+
+	<!-- Covers rule: Omitting the closing PHP tag at the end of a file is preferred. -->
+	<rule ref="PSR2.Files.ClosingTag"/>
+
+	<rule ref="Squiz.Strings.ConcatenationSpacing">
+		<properties>
+			<property name="spacing" value="1"/>
+			<property name="ignoreNewlines" value="true"/>
+		</properties>
+	</rule>
+
+	<!-- Covers rule: Define a function like so: function my_function( $param1 = 'foo', $param2 = 'bar' ) { -->
+	<rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie">
+		<properties>
+			<property name="checkClosures" value="true"/>
+		</properties>
+	</rule>
+	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+		<properties>
+			<property name="equalsSpacing" value="1"/>
+			<property name="requiredSpacesAfterOpen" value="1"/>
+			<property name="requiredSpacesBeforeClose" value="1"/>
+		</properties>
+	</rule>
+	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingBeforeClose">
+		<severity>0</severity>
+	</rule>
+
+	<!-- Covers rule: Call a function, like so: my_function( $param1, func_param( $param2 ) ); -->
+	<rule ref="PEAR.Functions.FunctionCallSignature">
+		<properties>
+			<property name="requiredSpacesAfterOpen" value="1"/>
+			<property name="requiredSpacesBeforeClose" value="1"/>
+
+			<!-- ... and for multi-line function calls, there should only be one parameter per line. -->
+			<property name="allowMultipleArguments" value="false"/>
+		</properties>
+	</rule>
+
+	<rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
+
+	<!-- Covers rule: Type casts must be lowercase. Always prefer the short form
+		 of type casts, (int) instead of (integer) and (bool) rather than (boolean).
+		 For float casts use (float). -->
+	<rule ref="Generic.Formatting.SpaceAfterCast"/>
+	<rule ref="Squiz.WhiteSpace.CastSpacing"/>
+	<rule ref="PSR12.Keywords.ShortFormTypeKeywords"/>
+	<!-- N.B.: This sniff also checks the case of (parameter/return) type declarations, not just type casts. -->
+	<rule ref="Generic.PHP.LowerCaseType"/>
+
+	<!-- Covers rule: Unless otherwise specified, parentheses should have spaces inside of them. -->
+	<rule ref="Generic.WhiteSpace.ArbitraryParenthesesSpacing">
+		<properties>
+			<property name="spacing" value="1"/>
+			<property name="ignoreNewlines" value="true"/>
+		</properties>
+	</rule>
+
+	<!-- Covers rule: Class names should use capitalized words separated by underscores. -->
+	<rule ref="PEAR.NamingConventions.ValidClassName"/>
+
+	<!-- Covers rule: Constants should be in all upper-case with underscores separating words. -->
+	<rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+
+	<!-- Rule: In general, readability is more important than cleverness or brevity. -->
+	<rule ref="Squiz.PHP.DisallowMultipleAssignments"/>
+	<rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+
+	<!-- Rule: The goto statement must never be used. -->
+	<rule ref="Generic.PHP.DiscourageGoto">
+		<type>error</type>
+		<message>The "goto" language construct should not be used.</message>
+	</rule>
+
+	<!-- Rule: The eval() construct is very dangerous, and is impossible to secure. ... these must not be used. -->
+	<rule ref="Squiz.PHP.Eval.Discouraged">
+		<type>error</type>
+		<message>eval() is a security risk so not allowed.</message>
+	</rule>
+
+	<!-- Rule: create_function() function, which internally performs an eval(),
+		 is deprecated in PHP 7.2. ... these must not be used.
+		 PHP - Don't extract(). -->
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array">
+                <element key="create_function" value="null"/>
+                <element key="extract" value="null"/>
+            </property>
+         </properties>
+    </rule>
+
+	<!-- Important to prevent issues with content being sent before headers. -->
+	<rule ref="Generic.Files.ByteOrderMark"/>
+
+	<!-- All line endings should be \n. -->
+	<rule ref="Generic.Files.LineEndings">
+		<properties>
+			<property name="eolChar" value="\n"/>
+		</properties>
+	</rule>
+
+	<!-- All files should end with a new line. -->
+	<rule ref="Generic.Files.EndFileNewline"/>
+
+	<!-- No whitespace should come before semicolons. -->
+	<rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
+
+	<!-- There should be no empty statements, i.e. lone semi-colons or open/close tags without content. -->
+	<rule ref="Generic.CodeAnalysis.EmptyPHPStatement"/>
+
+	<!-- Lowercase PHP constants, like true, false and null. -->
+	<!-- https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#naming-conventions -->
+	<rule ref="Generic.PHP.LowerCaseConstant"/>
+
+	<!-- Lowercase PHP keywords, like class, function and case. -->
+	<rule ref="Generic.PHP.LowerCaseKeyword"/>
+
+	<!-- Class opening braces should be on the same line as the statement. -->
+	<rule ref="Generic.Classes.OpeningBraceSameLine"/>
+
+	<!-- Object operators should not have whitespace around them unless they are multi-line. -->
+	<rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing">
+		<properties>
+			<property name="ignoreNewlines" value="true"/>
+		</properties>
+	</rule>
+
+	<!-- References to self in a class should be lower-case and not have extraneous spaces,
+		 per implicit conventions in the core codebase; the NotUsed code refers to using the
+		 fully-qualified class name instead of self, for which there are instances in core. -->
+	<rule ref="Squiz.Classes.SelfMemberReference"/>
+	<rule ref="Squiz.Classes.SelfMemberReference.NotUsed">
+		<severity>0</severity>
+	</rule>
+
+	<!-- Encourage having only one class/interface/trait per file.
+		 Moved from Extra to Core after discussion on Slack. -->
+	<rule ref="Generic.Files.OneObjectStructurePerFile">
+		<message>Best practices: Declare only one class/interface/trait in a file.</message>
+	</rule>
+
+</ruleset>
