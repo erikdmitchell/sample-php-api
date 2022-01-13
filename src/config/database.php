@@ -1,56 +1,148 @@
 <?php
+/**
+ * Main database class
+ *
+ * @package PHPAPI
+ * @version 0.1.0
+ */
+
+namespace Mitchell\API\Config;
+
+final class Database {
     
-namespace Mitchell\API\Config;    
+	public $version = '0.1.0';    
 
-class Database {
-    /*
-    * Create variables for credentials to MySQL database
-    * The variables have been declared as private. This
-    * means that they will only be available with the
-    * Database class
-    */
-    private $db_host = 'localhost';  // Change as required
-    private $db_user = 'wp';  // Change as required
-    private $db_pass = 'wp';  // Change as required
-    private $db_name = 'nonwp';    // Change as required
+    /**
+     * Our single database client instance.
+     *
+     * @var Database
+     */
+    protected static $_instance = null;
 
-    /*
-    * Extra variables that are required by other function such as boolean con variable
-    */
-    private $connected  = false; // Check to see if the connection is active
+    private $connected = false; // Check to see if the connection is active
+
     private $connection = ''; // This will be our mysqli object
-    private $result     = array(); // Any results from a query will be stored here
-    private $query      = '';// used for debugging process with SQL return
-    private $numResults = '';// used for returning the number of rows
+
+    private $result = array(); // Any results from a query will be stored here
+
+    private $query = '';// used for debugging process with SQL return
+
+    private $num_results = '';// used for returning the number of rows
 
     public $insert_id = 0;
 
-    // Function to make connection to database
-    public function connect() {
-        if (!$this->connected) {
-            $this->connection = new \mysqli( $this->db_host, $this->db_user, $this->db_pass, $this->db_name );  // mysql_connect() with variables defined at the start of Database class
+    /**
+     * Disable instantiation.
+     */
+    private function __construct() {
+        // Private to disabled instantiation.
+    }
 
+    /**
+     * Create or retrieve the instance of our database client.
+     *
+     * @return Database
+     */
+    public static function getInstance( $args = array() ) { 
+
+/*
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+		return self::$_instance;
+*/
+	              
+        if (is_null( static::$_instance )) {
+            $defaults = array(
+                'db_host' => 'localhost',
+                'db_user' => 'root',
+                'db_pass' => 'root',
+                'db_name' => 'nonwp',
+            );
+
+            $args = parse_args( $args, $defaults );
+
+            static::$_instance = new Database;
+            static::$_instance->set_host( $args['db_host'] );
+            static::$_instance->set_port( 3306 );
+            static::$_instance->set_username( $args['db_user'] );
+            static::$_instance->set_password( $args['db_pass'] );
+            static::$_instance->set_name( $args['db_name'] );
+
+            // connect.
+            static::$_instance->connect();
+        }
+
+        return static::$_instance;
+    }
+
+    /**
+     * Disable the cloning of this class.
+     *
+     * @return void
+     */
+    final public function __clone() {
+        throw new Exception( 'Feature disabled.' );
+    }
+
+    /**
+     * Disable the wakeup of this class.
+     *
+     * @return void
+     */
+    final public function __wakeup() {
+        throw new Exception( 'Feature disabled.' );
+    }
+
+    private function set_host( $host = '') {
+        $this->db_host = $host;
+    }
+
+    private function set_port( $port = 3306) {
+        $this->db_port = $port;
+    }
+
+    private function set_username( $username = '') {
+        $this->db_user = $username;
+    }
+
+    private function set_password( $password = '') {
+        $this->db_pass = $password;
+    }
+
+    private function set_name( $name = '') {
+        $this->db_name = $name;
+    }
+
+    public function connect() {
+        // if not already connected, connect :).
+        if (!$this->connected) { 
+            $this->connection = new \mysqli( $this->db_host, $this->db_user, $this->db_pass, $this->db_name );
+
+            // checks for error and pushes it to the result var, otherwise return true.
             if ($this->connection->connect_errno > 0) {
                 array_push( $this->result, $this->connection->connect_error );
-                return false; // Problem selecting database return FALSE
+
+                return false;
             } else {
                 $this->connected = true;
-                return true; // Connection has been made return TRUE
+
+                return true;
             }
         }
 
-        return true; // Connection has already been made return TRUE
+        return true;
     }
 
     // Function to disconnect from the database
     public function disconnect() {
-        // If there is a connection to the database
+        // If there is a connection to the database.
         if ($this->connected) {
             // We have found a connection, try to close it, otherwise return false.
             if ($this->connection->close()) {
-                $this->connected = false; // We have successfully closed the connection, set the connection variable to false
+                $this->connected = false;
 
-                return true; // Return true that we have closed the connection
+                return true;
             } else {
                 return false;
             }
@@ -63,10 +155,10 @@ class Database {
         $this->query = $sql; // Pass back the SQL
 
         if ($query) {
-            $this->numResults = $query->num_rows; // If the query returns >= 1 assign the number of rows to numResults
+            $this->num_results = $query->num_rows; // If the query returns >= 1 assign the number of rows to num_results
 
             // Loop through the query results by the number of rows returned
-            for ($i = 0; $i < $this->numResults; $i++) {
+            for ($i = 0; $i < $this->num_results; $i++) {
                 $r      = $query->fetch_array();
                    $key = array_keys( $r );
                 for ($x = 0; $x < count( $key ); $x++) {
@@ -128,10 +220,10 @@ class Database {
             $query = $this->connection->query( $q );
 
             if ($query) {
-                // If the query returns >= 1 assign the number of rows to numResults
-                $this->numResults = $query->num_rows;
+                // If the query returns >= 1 assign the number of rows to num_results
+                $this->num_results = $query->num_rows;
                 // Loop through the query results by the number of rows returned
-                for ($i = 0; $i < $this->numResults; $i++) {
+                for ($i = 0; $i < $this->num_results; $i++) {
                     $r   = $query->fetch_array();
                     $key = array_keys( $r );
                     for ($x = 0; $x < count( $key ); $x++) {
@@ -299,7 +391,7 @@ class Database {
         }
 
         // Extract var out of cached results based on x,y vals.
-        if ( ! empty( $this->result[ $y ] ) ) {
+        if ( ! empty( $this->result[ $y ] ) && is_array( $this->result[ $y ] ) ) {
             $values = array_values( $this->result[ $y ] );
         }
 
@@ -308,14 +400,16 @@ class Database {
     }
 
     // Check if table exists for use with queries
-    public function table_exists( $table) {
-        $tablesInDb = $this->connection->query( 'SHOW TABLES FROM ' . $this->db_name . ' LIKE "' . $table . '"' );
-        if ($tablesInDb) {
-            if ($tablesInDb->num_rows == 1) {
-                return true; // The table exists
+    public function table_exists( $table = '') {
+        $tables_in_db = $this->connection->query( 'SHOW TABLES FROM ' . $this->db_name . ' LIKE "' . $table . '"' );
+
+        if ($tables_in_db) {
+            if ($tables_in_db->num_rows == 1) {
+                return true; // The table exists.
             } else {
                 array_push( $this->result, $table . ' does not exist in this database' );
-                return false; // The table does not exist
+
+                return false; // The table does not exist.
             }
         }
     }
@@ -336,8 +430,8 @@ class Database {
 
     // Pass the number of rows back
     public function num_rows() {
-        $val              = $this->numResults;
-        $this->numResults = array();
+        $val               = $this->num_results;
+        $this->num_results = array();
         return $val;
     }
 
